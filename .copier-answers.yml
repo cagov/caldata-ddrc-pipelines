@@ -1,0 +1,9 @@
+# Changes here will be overwritten by Copier
+_commit: 00cc179
+_src_path: https://github.com/cagov/caldata-infrastructure-template
+dbt_profile_name: caldata_ddrc_pipelines
+email_address: ian.rose@innovation.ca.gov
+friendly_project_name: CalData Digital Disaster Recovery Center Data Pipelines
+license: MIT
+project_name: caldata-ddrc-pipelines
+team_name: CalData Data Operations and Engineering

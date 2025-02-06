@@ -8,7 +8,7 @@ if __name__ == "__main__":
         schema="public",
     )
     snowflake_conn.cursor().execute(
-        f"""call raw_ddrc_prd.public.EMAIL_FIRE_ASSESSMENT_REPORT('{recipients}')"""
+        f"""call email_fire_assessment_report('{recipients}')"""
     )
 
     snowflake_conn.close()

@@ -6,7 +6,6 @@ from snowflake.snowpark import types
 
 
 def email_fire_assessment_report(session: snowpark.Session, emails: str) -> str:
-    # Your code goes here, inside the "main" handler.
     job = session.sql(
         """
         select

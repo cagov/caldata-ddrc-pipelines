@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     import geopandas
 
 
-SCHEMA = "DDRC"
+SCHEMA = "EPA"
 FEATURE_SERVICES = {
     "PUBLIC_STATUS_ASSESSMENT": (
         "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"

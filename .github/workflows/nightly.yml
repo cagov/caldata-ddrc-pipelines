@@ -1,21 +1,21 @@
 name: nightly
 on:
   push:
-    branches: [load_assessment_data]
+    branches: [load-assessment-data]
 
 permissions:
   contents: write
 
 env:
-  SNOWFLAKE_DATABASE: RAW_PRD
-  SNOWFLAKE_ROLE: LOADER_PRD
-  SNOWFLAKE_WAREHOUSE: LOADING_XS_PRD
+  SNOWFLAKE_DATABASE: RAW_DDRC_PRD
+  SNOWFLAKE_ROLE: LOADER_DDRC_PRD
+  SNOWFLAKE_WAREHOUSE: LOADING_XS_DDRC_PRD
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_PRD }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 
 jobs:
-  build-docs:
+  nightly:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

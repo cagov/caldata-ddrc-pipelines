@@ -13,9 +13,9 @@ def email_fire_assessment_report(session: snowpark.Session, emails: str) -> str:
             "FireName" as "Fire Name",
             "PublicStatus" as "Status",
             count(*) as "Count"
-        from raw_dev.ddrc.public_status_assessment
+        from raw_ddrc_prd.epa.public_status_assessment
         where _load_date = (
-          select max(_load_date) from raw_dev.ddrc.public_status_assessment
+          select max(_load_date) from raw_ddrc_prd.epa.public_status_assessment
         )
         group by "FireName", "PublicStatus"
         order by "FireName", "PublicStatus"
@@ -33,7 +33,7 @@ def email_fire_assessment_report(session: snowpark.Session, emails: str) -> str:
     session.sql(
         f"""
         CALL SYSTEM$SEND_EMAIL(
-            'my_email_int',
+            'default_email_integration',
             '{emails}',
             'LA Fire Assessment Report',
             '{email_data}',
@@ -73,3 +73,9 @@ if __name__ == "__main__":
         is_permanent=True,
         stage_location=f"@{conn.database}.{conn.schema}.internal_sprocs",
     )
+
+    # This feels very fragile
+    session.sql(
+        """grant usage on procedure email_fire_assessment_report(varchar)
+        to role loader_ddrc_prd"""
+    ).collect()

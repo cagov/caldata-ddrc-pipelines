@@ -13,6 +13,7 @@ env:
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_PRD }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
+  FIRE_REPORT_RECIPIENTS: ${{ SECRETS.FIRE_REPORT_RECIPIENTS }}
 
 jobs:
   nightly:
@@ -35,3 +36,4 @@ jobs:
       - name: Run assessment job
         run: |
           poetry run python -m jobs.load_la_fire_assessment
+          poetry run python -m jobs.send_la_fire_assessment_email_report

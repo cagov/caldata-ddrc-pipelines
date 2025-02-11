@@ -9,8 +9,8 @@ permissions:
 env:
   DBT_PROFILES_DIR: transform/ci
 
-  DBT_RAW_DB: RAW_PRD
-  DBT_ANALYTICS_DB: ANALYTICS_PRD
+  DBT_RAW_DB: RAW_DDRC_PRD
+  DBT_ANALYTICS_DB: ANALYTICS_DDRC_PRD
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_PRD }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           key: ${{ github.ref }}
           path: .cache

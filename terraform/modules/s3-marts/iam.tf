@@ -2,7 +2,7 @@
 #        IAM Service Users       #
 ##################################
 
-resource "aws_iam_role_policy_attachment" "snowflake_storage_integration_marts" {
+resource "aws_iam_role_policy_attachment" "snowflake_storage_integration" {
   role       = aws_iam_role.snowflake_storage_integration.name
   policy_arn = aws_iam_policy.marts_external_stage_policy.arn
 }

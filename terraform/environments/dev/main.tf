@@ -46,8 +46,8 @@ locals {
   # These are circular dependencies on the outputs. Unfortunate, but
   # necessary, as we don't know them until we've created the storage
   # integration, which itself depends on the assume role policy.
-  storage_aws_external_id  = "NGB13288_SFCRole=2_YhkANpChE8XgIr7PAY6q5lOqIf0="
-  storage_aws_iam_user_arn = "arn:aws:iam::946158320428:user/uunc0000-s"
+  # storage_aws_external_id  = "NGB13288_SFCRole=2_YhkANpChE8XgIr7PAY6q5lOqIf0="
+  storage_aws_iam_user_arn = "676096391788"
 }
 
 
@@ -58,37 +58,37 @@ locals {
 provider "snowflake" {
   account_name      = var.account_name
   organization_name = var.organization_name
-  role    = "PUBLIC"
+  role              = "PUBLIC"
 }
 
 # Snowflake provider for account administration (to be used only when necessary).
 provider "snowflake" {
-  alias   = "accountadmin"
-  role    = "ACCOUNTADMIN"
+  alias             = "accountadmin"
+  role              = "ACCOUNTADMIN"
   account_name      = var.account_name
   organization_name = var.organization_name
 }
 
 # Snowflake provider for creating databases, warehouses, etc.
 provider "snowflake" {
-  alias   = "sysadmin"
-  role    = "SYSADMIN"
+  alias             = "sysadmin"
+  role              = "SYSADMIN"
   account_name      = var.account_name
   organization_name = var.organization_name
 }
 
 # Snowflake provider for managing grants to roles.
 provider "snowflake" {
-  alias   = "securityadmin"
-  role    = "SECURITYADMIN"
+  alias             = "securityadmin"
+  role              = "SECURITYADMIN"
   account_name      = var.account_name
   organization_name = var.organization_name
 }
 
 # Snowflake provider for managing user accounts and roles.
 provider "snowflake" {
-  alias   = "useradmin"
-  role    = "USERADMIN"
+  alias             = "useradmin"
+  role              = "USERADMIN"
   account_name      = var.account_name
   organization_name = var.organization_name
 }
@@ -129,13 +129,18 @@ module "elt" {
 module "marts" {
   source = "../../modules/s3-marts"
   providers = {
-    aws = aws
+    aws                     = aws
+    snowflake.accountadmin  = snowflake.accountadmin,
+    snowflake.securityadmin = snowflake.securityadmin,
+    snowflake.sysadmin      = snowflake.sysadmin,
+    snowflake.useradmin     = snowflake.useradmin,
   }
 
-  prefix                                     = "${local.owner}-${local.project}-${local.environment}"
-  region                                     = local.region
+  environment = upper("${local.project}_${local.environment}")
+  prefix      = "${local.owner}-${local.project}-${local.environment}"
+  region      = local.region
   snowflake_storage_integration_iam_user_arn = local.storage_aws_iam_user_arn
-  snowflake_storage_integration_external_id  = local.storage_aws_external_id
+  # snowflake_storage_integration_external_id  = local.storage_aws_external_id
 }
 
 

@@ -13,3 +13,11 @@ output "snowflake_storage_integration_role" {
     arn  = aws_iam_role.snowflake_storage_integration.arn
   }
 }
+
+output "snowflake_storage_integration" {
+  description = "IAM user Snowflake uses to assume the integration role"
+  value = {
+    arn         = snowflake_storage_integration.storage_integration.storage_aws_iam_user_arn
+    external_id = snowflake_storage_integration.storage_integration.storage_aws_external_id
+  }
+}

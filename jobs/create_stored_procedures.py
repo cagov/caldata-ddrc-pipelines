@@ -10,14 +10,15 @@ def email_fire_assessment_report(session: snowpark.Session, emails: str) -> str:
         """
         select
             "FireName" as "Fire Name",
+            "LandUse" as "Land Use",
             "PublicStatus" as "Status",
             count(*) as "Count"
         from raw_ddrc_prd.epa.public_status_assessment
         where _load_date = (
           select max(_load_date) from raw_ddrc_prd.epa.public_status_assessment
         )
-        group by "FireName", "PublicStatus"
-        order by "FireName", "PublicStatus"
+        group by "FireName", "LandUse", "PublicStatus"
+        order by "FireName", "LandUse", "PublicStatus"
         """
     ).collect_nowait()
     df = job.to_df().to_pandas()
@@ -26,7 +27,9 @@ def email_fire_assessment_report(session: snowpark.Session, emails: str) -> str:
         f"Total number of properties: {df.Count.sum()}",
         "Assessment status:",
         df.groupby("Status").Count.sum().reset_index().style.hide().to_html(),
-        "Assessment status broken down by fire:",
+        "Assessment status broken down by land use:",
+        df.groupby(["Status", "Land Use"]).Count.sum().reset_index().style.hide().to_html(),
+        "Assessment status broken down by fire and land use:",
         df.style.hide().to_html(),
     ])
     session.sql(

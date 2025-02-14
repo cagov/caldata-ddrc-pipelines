@@ -5,6 +5,7 @@ import string
 from typing import TYPE_CHECKING
 
 import pandas
+import requests
 
 from jobs.utils.geo import gdf_from_esri_feature_service
 from jobs.utils.snowflake import (
@@ -35,9 +36,13 @@ if __name__ == "__main__":
         for name, url in FEATURE_SERVICES.items():
             print(f"Loading {name}")
 
+            # Last edit information lives in the JSON metadata
+            metadata = requests.get(url + "?f=pjson").json()
+
             # Add a load date column, as we will be re-loading the dataset daily
             gdf: geopandas.GeoDataFrame = gdf_from_esri_feature_service(url).assign(
-                _LOAD_DATE=pandas.Timestamp.today(tz="America/Los_Angeles").date()
+                _LOAD_DATE=pandas.Timestamp.today(tz="America/Los_Angeles").date(),
+                _LAST_EDIT_DATE=metadata.get("editingInfo", {}).get("lastEditDate"),
             )  # type: ignore
 
             # Load to Snowflake
@@ -74,7 +79,8 @@ if __name__ == "__main__":
                         {name}."PublicStatus" = {tmp}."PublicStatus",
                         {name}."Shape__Area" = {tmp}."Shape__Area",
                         {name}."Shape__Length" = {tmp}."Shape__Length",
-                        {name}."geometry" = {tmp}."geometry"
+                        {name}."geometry" = {tmp}."geometry",
+                        {name}."_LAST_EDIT_DATE" = {tmp}."_LAST_EDIT_DATE"
                     when not matched then insert
                         (
                             "APN",
@@ -88,7 +94,8 @@ if __name__ == "__main__":
                             "Shape__Area",
                             "Shape__Length",
                             "_LOAD_DATE",
-                            "geometry"
+                            "geometry",
+                            "_LAST_EDIT_DATE"
                         )
                         values
                         (
@@ -103,7 +110,8 @@ if __name__ == "__main__":
                             {tmp}."Shape__Area",
                             {tmp}."Shape__Length",
                             {tmp}."_LOAD_DATE",
-                            {tmp}."geometry"
+                            {tmp}."geometry",
+                            {tmp}."_LAST_EDIT_DATE"
                         )
                     """
                 )

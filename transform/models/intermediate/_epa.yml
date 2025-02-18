@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: int_epa__most_recent_public_status_assessment
+    description: |
+      This model returns public statuses by land use and
+      fire name for the most recent data load date.
+    columns:
+      - name: PUBLIC_STATUS
+      - name: LAND_USE
+      - name: FIRE_NAME
+      - name: LAST_EDIT_DATE

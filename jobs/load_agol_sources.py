@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 datasets = [
     {
-        "schema": "EPA_AGOL",
+        "schema": "EPA_AGOL_ASSESSMENT",
         "name": "PUBLIC_STATUS_ASSESSMENT",
         "url": (
             "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
@@ -101,5 +101,7 @@ if __name__ == "__main__":
 
                 # Clean up after ourselves
                 snowflake_conn.cursor().execute(f"""drop table {tmp}""")
+        except Exception as e:
+            print(f"Unable to load {name}, due to {e}")
         finally:
             snowflake_conn.close()

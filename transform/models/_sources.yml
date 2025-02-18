@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: EPA
+    database: RAW_DDRC_PRD
+    schema: EPA
+    description: Unknown.
+    tables:
+      - name: PUBLIC_STATUS_ASSESSMENT
+        description: Unknown.
+        columns:
+          - name: APN
+          - name: Address
+          - name: AssessmentDate
+          - name: FireName
+          - name: GlobalID
+          - name: LandUse
+          - name: OBJECTID
+          - name: PublicStatus
+          - name: Shape__Area
+          - name: Shape__Length
+          - name: _LAST_EDIT_DATE
+          - name: _LOAD_DATE
+          - name: geometry

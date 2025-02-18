@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: public_status_by_land_use_and_fire_name_counted
+    description: |
+      This model returns the count of public statuses
+      by land use and fire name for the most recent
+      data load date.
+    columns:
+      - name: PUBLIC_STATUS
+      - name: PUBLIC_STATUS_COUNT
+      - name: LAND_USE
+      - name: FIRE_NAME
+      - name: LAST_EDIT_DATE

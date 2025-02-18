@@ -26,4 +26,23 @@ clean-targets: # directories to be removed by `dbt clean`
   - target
   - dbt_packages
 
-models: {}
+models:
+  caldata_ddrc_pipelines:
+    staging:
+      +database: "{{ env_var('DBT_TRANSFORM_DB', 'TRANSFORM_DDRC_DEV') }}"
+      epa:
+        +schema: epa
+        +materialized: view
+
+    intermediate:
+      +database: "{{ env_var('DBT_TRANSFORM_DB', 'TRANSFORM_DDRC_DEV') }}"
+      epa:
+        +schema: epa
+        +materialized: view
+
+    marts:
+      +materialized: table
+      +database: "{{ env_var('DBT_ANALYTICS_DB', 'ANALYTICS_DDRC_DEV') }}"
+      epa:
+        +schema: epa
+        +materialized: table

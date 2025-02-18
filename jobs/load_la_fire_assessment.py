@@ -18,23 +18,28 @@ if TYPE_CHECKING:
     import geopandas
 
 
-SCHEMA = "EPA"
-FEATURE_SERVICES = {
-    "PUBLIC_STATUS_ASSESSMENT": (
-        "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
-        "SoCalFires2025_PublicStatusNightly/FeatureServer/0"
-    )
-}
+datasets = [
+    {
+        "schema": "EPA_AGOL",
+        "name": "PUBLIC_STATUS_ASSESSMENT",
+        "url": (
+            "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
+            "SoCalFires2025_PublicStatusNightly/FeatureServer/0"
+        ),
+        "merge_on": ["OBJECTID", "_LOAD_DATE"]
+    },
+]
 
 if __name__ == "__main__":
-    snowflake_conn = snowflake_connection_from_environment(schema=SCHEMA)
-    snowflake_conn.cursor().execute(
-        f'CREATE SCHEMA IF NOT EXISTS "{snowflake_conn.schema}"'.upper()
-    )
-
-    try:
-        for name, url in FEATURE_SERVICES.items():
-            print(f"Loading {name}")
+    for d in datasets:
+        name = d["name"]
+        url = d["url"]
+        print(f"Loading {d['name']}")
+        snowflake_conn = snowflake_connection_from_environment(schema=d["schema"])
+        try:
+            snowflake_conn.cursor().execute(
+                f'CREATE SCHEMA IF NOT EXISTS "{snowflake_conn.schema}"'.upper()
+            )
 
             # Last edit information lives in the JSON metadata
             metadata = requests.get(url + "?f=pjson").json()
@@ -64,60 +69,37 @@ if __name__ == "__main__":
                 # like a good thing to merge on. If this seems problematic,
                 # we can investigate APN (which is nullable). GlobalID does not seem
                 # to be stable.
+                non_merge_cols = set(gdf.columns) - set(d["merge_on"])
+                merge_on = "and ".join(
+                    [f'''{name}."{k}" = {tmp}."{k}"''' for k in d["merge_on"]]
+                )
+                when_matched = ",\n".join(
+                    [f'''{name}."{k}" = {tmp}."{k}"''' for k in non_merge_cols]
+                )
+                when_not_matched_insert = ",\n".join(
+                    [f'''"{k}"''' for k in non_merge_cols]
+                )
+                when_not_matched_values = ",\n".join(
+                    [f'''{tmp}."{k}"''' for k in non_merge_cols]
+                )
                 snowflake_conn.cursor().execute(
                     f"""
                     merge into {name} using {tmp}
-                        on {name}."OBJECTID" = {tmp}."OBJECTID"
-                        and {name}._LOAD_DATE = {tmp}._LOAD_DATE
+                        on {merge_on}
                     when matched then update set
-                        {name}."APN" = {tmp}."APN",
-                        {name}."Address" = {tmp}."Address",
-                        {name}."AssessmentDate" = {tmp}."AssessmentDate",
-                        {name}."FireName" = {tmp}."FireName",
-                        {name}."GlobalID" = {tmp}."GlobalID",
-                        {name}."LandUse" = {tmp}."LandUse",
-                        {name}."PublicStatus" = {tmp}."PublicStatus",
-                        {name}."Shape__Area" = {tmp}."Shape__Area",
-                        {name}."Shape__Length" = {tmp}."Shape__Length",
-                        {name}."geometry" = {tmp}."geometry",
-                        {name}."_LAST_EDIT_DATE" = {tmp}."_LAST_EDIT_DATE"
+                        {when_matched}
                     when not matched then insert
                         (
-                            "APN",
-                            "Address",
-                            "AssessmentDate",
-                            "FireName",
-                            "GlobalID",
-                            "LandUse",
-                            "OBJECTID",
-                            "PublicStatus",
-                            "Shape__Area",
-                            "Shape__Length",
-                            "_LOAD_DATE",
-                            "geometry",
-                            "_LAST_EDIT_DATE"
+                            {when_not_matched_insert}
                         )
                         values
                         (
-                            {tmp}."APN",
-                            {tmp}."Address",
-                            {tmp}."AssessmentDate",
-                            {tmp}."FireName",
-                            {tmp}."GlobalID",
-                            {tmp}."LandUse",
-                            {tmp}."OBJECTID",
-                            {tmp}."PublicStatus",
-                            {tmp}."Shape__Area",
-                            {tmp}."Shape__Length",
-                            {tmp}."_LOAD_DATE",
-                            {tmp}."geometry",
-                            {tmp}."_LAST_EDIT_DATE"
+                            {when_not_matched_values}
                         )
                     """
                 )
 
                 # Clean up after ourselves
                 snowflake_conn.cursor().execute(f"""drop table {tmp}""")
-
-    finally:
-        snowflake_conn.close()
+        finally:
+                snowflake_conn.close()

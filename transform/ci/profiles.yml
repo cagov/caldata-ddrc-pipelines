@@ -7,19 +7,19 @@ caldata_ddrc_pipelines:
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
       user: "{{ env_var('SNOWFLAKE_USER') }}"
       private_key: "{{ env_var('SNOWFLAKE_PRIVATE_KEY') }}"
-      role: READER_DDRC_DEV
-      warehouse: REPORTING_XS_DDRC_DEV
-      database: ANALYTICS_DDRC_DEV
-      schema: ci_should_not_create_this_schema
-      threads: 4
+      role: "{{ env_var('SNOWFLAKE_ROLE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'ci_should_not_create_this_schema') }}"
+      threads: 8
     prd:
       type: snowflake
 
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
       user: "{{ env_var('SNOWFLAKE_USER') }}"
       private_key: "{{ env_var('SNOWFLAKE_PRIVATE_KEY') }}"
-      role: READER_DDRC_PRD
-      warehouse: REPORTING_XS_DDRC_PRD
-      database: ANALYTICS_DDRC_PRD
-      schema: ANALYTICS
-      threads: 4
+      role: "{{ env_var('SNOWFLAKE_ROLE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'ANALYTICS') }}"
+      threads: 8

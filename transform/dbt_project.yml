@@ -41,8 +41,6 @@ models:
         +materialized: view
 
     marts:
-      # All marts models as tables to avoid needing write access to TRANSFORM
-      # https://community.snowflake.com/s/article/SQL-compilation-error-Failure-during-expansion-of-view-mySecureView
       +materialized: table
       +database: "{{ env_var('DBT_ANALYTICS_DB', 'ANALYTICS_DDRC_DEV') }}"
       epa:

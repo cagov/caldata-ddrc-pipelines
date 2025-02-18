@@ -9,10 +9,10 @@ ps_by_land_use_and_fire_name_counted as (
         COUNT(public_status) as public_status_count,
         land_use,
         fire_name,
-        last_edit_date
+        last_updated
 
     from most_recent_psa_data
-    group by public_status, land_use, fire_name, last_edit_date
+    group by public_status, land_use, fire_name, last_updated
 
 )
 

@@ -15,7 +15,7 @@ most_recent_psa_data as (
         psa.public_status,
         psa.land_use,
         psa.fire_name,
-        psa.last_edit_date
+        psa.last_updated
 
     from psa
     inner join most_recent_date as md on psa.load_date = md.max_date

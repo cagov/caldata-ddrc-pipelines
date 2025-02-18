@@ -12,8 +12,8 @@ with psa as (
         "PublicStatus" as public_status,
         "Shape__Area" as shape_area,
         "Shape__Length" as shape_length,
-        date("_LAST_EDIT_DATE") as last_edit_date,
-        date("_LOAD_DATE") as load_date,
+        TO_TIMESTAMP("_LAST_EDIT_DATE", 3) as last_updated,
+        TO_DATE("_LOAD_DATE") as load_date,
         "geometry" as geometry
 
     from {{ source('EPA','PUBLIC_STATUS_ASSESSMENT') }}

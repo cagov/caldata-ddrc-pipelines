@@ -26,14 +26,14 @@ datasets = [
             "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
             "SoCalFires2025_PublicStatusNightly/FeatureServer/0"
         ),
-        "merge_on": ["OBJECTID", "_LOAD_DATE"]
+        "merge_on": ["OBJECTID", "_LOAD_DATE"],
     },
 ]
 
 if __name__ == "__main__":
     for d in datasets:
-        name = d["name"]
-        url = d["url"]
+        name: str = d["name"]  # type: ignore
+        url: str = d["url"]  # type: ignore
         print(f"Loading {d['name']}")
         snowflake_conn = snowflake_connection_from_environment(schema=d["schema"])
         try:
@@ -102,4 +102,4 @@ if __name__ == "__main__":
                 # Clean up after ourselves
                 snowflake_conn.cursor().execute(f"""drop table {tmp}""")
         finally:
-                snowflake_conn.close()
+            snowflake_conn.close()

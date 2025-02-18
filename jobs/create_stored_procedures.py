@@ -19,15 +19,21 @@ def email_fire_assessment_report(session: snowpark.Session, emails: str) -> str:
     ).collect_nowait()
     df = job.to_df().to_pandas()
 
-    email_data = "<br>".join([
-        f"Total number of properties: {df.Count.sum()}",
-        "Assessment status:",
-        df.groupby("Status").Count.sum().reset_index().style.hide().to_html(),
-        "Assessment status broken down by land use:",
-        df.groupby(["Status", "Land Use"]).Count.sum().reset_index().style.hide().to_html(),
-        "Assessment status broken down by fire and land use:",
-        df.style.hide().to_html(),
-    ])
+    email_data = "<br>".join(
+        [
+            f"Total number of properties: {df.Count.sum()}",
+            "Assessment status:",
+            df.groupby("Status").Count.sum().reset_index().style.hide().to_html(),
+            "Assessment status broken down by land use:",
+            df.groupby(["Status", "Land Use"])
+            .Count.sum()
+            .reset_index()
+            .style.hide()
+            .to_html(),
+            "Assessment status broken down by fire and land use:",
+            df.style.hide().to_html(),
+        ]
+    )
     session.sql(
         f"""
         CALL SYSTEM$SEND_EMAIL(

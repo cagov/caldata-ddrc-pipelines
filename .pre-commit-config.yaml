@@ -19,6 +19,26 @@ repos:
     hooks:
       - id: yamllint
         args: []
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.9.6
+    hooks:
+      - id: ruff
+        args: [--show-files, --fix]
+      - id: ruff-format
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.4
+    hooks:
+      - id: codespell
+        types_or: [rst, markdown]
+        files: docs
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.1.1
+    hooks:
+      - id: mypy
+        args: [--warn-unused-configs]
+        additional_dependencies:
+          - types-requests
+          - numpy
   # Note: for SQLFluff we don't use the default pre-commit hook for a few reasons:
   #   1. dbt cloud looks for config in the dbt project directory, so we put it in
   #      transform/, however sqlfluff requires the templater config to be in the

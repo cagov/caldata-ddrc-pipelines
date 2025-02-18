@@ -12,13 +12,13 @@ most_recent_date as (
 most_recent_psa_data as (
 
     select
-        public_status,
-        land_use,
-        fire_name,
-        last_edit_date
+        psa.public_status,
+        psa.land_use,
+        psa.fire_name,
+        psa.last_edit_date
 
     from psa
-    inner join most_recent_date as md on load_date = md.max_date
+    inner join most_recent_date as md on psa.load_date = md.max_date
 
 )
 

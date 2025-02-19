@@ -5,6 +5,7 @@ models:
     config:
       contract:
         enforced: true
+        warn_unenforced: false
     description: |
       All metrics for the Digital Disaster Recovery Center. Each metric overwrites its previous entry on every update.
     columns:
@@ -14,7 +15,6 @@ models:
         constraints:
           - type: not_null
           - type: unique # note: Snowflake accepts this constraint, but does not enforce it. For show / metadata only
-            warn_unenforced = false
         data_tests:
           - not_null
           - unique

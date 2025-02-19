@@ -3,9 +3,6 @@ on:
   schedule:
     # Run at 8AM Pacific (16:00 UTC)
     - cron: "4 16 * * *"
-  push:
-    branches:
-      - nightly-dbt-build
   # Also allow for manual triggers
   workflow_dispatch:
 

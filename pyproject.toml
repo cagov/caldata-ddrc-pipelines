@@ -15,6 +15,7 @@ dbt-snowflake = "~1.9.0"
 snowflake-connector-python = {"version"="~3.13", "extras"=["pandas"]}
 snowflake-snowpark-python = "~1.27"
 geopandas = "~1.0"
+backoff = "^2.2.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.1"
@@ -24,3 +25,14 @@ sqlfluff-templater-dbt = "~3.1.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.10"
+allow_untyped_decorators = true # would love to enable this, but airflow decorators are untyped
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+warn_redundant_casts = true
+warn_unused_ignores = false
+warn_unreachable = true
+

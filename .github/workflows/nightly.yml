@@ -35,7 +35,7 @@ jobs:
           SNOWFLAKE_DATABASE: RAW_DDRC_PRD
           SNOWFLAKE_WAREHOUSE: LOADING_XS_DDRC_PRD
         run: |
-          poetry run python -m jobs.load_la_fire_assessment
+          poetry run python -m jobs.load_agol_sources
       - name: Build dbt project
         env:
           DBT_PROFILES_DIR: transform/ci

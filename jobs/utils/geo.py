@@ -1,10 +1,28 @@
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
+import io
 
+import backoff
 import geopandas
 import pandas
+import requests
 
 
-def gdf_from_esri_feature_service(url) -> geopandas.GeoDataFrame:
+@backoff.on_exception(
+    backoff.expo,
+    requests.exceptions.RequestException,
+    max_tries=10,
+)
+def get_with_backoff(url, **kwargs):
+    """
+    Thin wrapper around requests.get implementing exponential backoff for
+    unreliable urls.
+    """
+    response = requests.get(url, **kwargs)
+    response.raise_for_status()
+    return response
+
+
+def gdf_from_esri_feature_service(url, verify=True) -> geopandas.GeoDataFrame:
     """
     Load an Esri Feature Service to a GeoDataFrame.
 
@@ -33,7 +51,10 @@ def gdf_from_esri_feature_service(url) -> geopandas.GeoDataFrame:
         )
         offset_url = urlunparse(parsed._replace(query=urlencode(queries)))
 
-        gdf = geopandas.read_file(offset_url)
+        response = get_with_backoff(offset_url, verify=verify)
+        f = io.StringIO(response.text)
+
+        gdf = geopandas.read_file(f)
         if len(gdf) == 0:
             break
 

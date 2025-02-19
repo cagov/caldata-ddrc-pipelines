@@ -44,3 +44,6 @@ models:
       epa:
         +schema: epa
         +materialized: table
+      summary:
+        +schema: summary
+        +materialized: table

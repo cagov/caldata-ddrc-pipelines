@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: ddrc_metrics_summary
+    config:
+      contract:
+        enforced: true
+    description: |
+      All metrics for the Digital Disaster Recovery Center. Each metric overwrites its previous entry on every update.
+    columns:
+      - name: metric_name
+        description: Descriptive label for metric
+        data_type: string
+        constraints:
+          - type: not_null
+          - type: unique # note: Snowflake accepts this constraint, but does not enforce it. For show / metadata only
+        data_tests:
+          - not_null
+          - unique
+      - name: metric_value
+        description: Latest value for metric
+        data_type: numeric
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+      - name: last_updated
+        description: Most recent update timestamp
+        data_type: timestamp
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null

@@ -5,6 +5,7 @@ models:
     config:
       contract:
         enforced: true
+        warn_unenforced: false
     description: |
       All metrics for the Digital Disaster Recovery Center. Each metric overwrites its previous entry on every update.
     columns:
@@ -24,6 +25,29 @@ models:
           - type: not_null
         data_tests:
           - not_null
+      - name: metric_type
+        description: Category of metric
+        data_type: string
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+      - name: metric_unit_label
+        description: Longer description of what metric measure
+        data_type: string
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+      - name: update_frequency
+        description: How often this metric is updated
+        data_type: string
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+          - accepted_values: # is this test overkill?
+              values: ["As needed", "Daily", "Weekly", "Monthly"] # these values are taken from the Airtable
       - name: last_updated
         description: Most recent update timestamp
         data_type: timestamp

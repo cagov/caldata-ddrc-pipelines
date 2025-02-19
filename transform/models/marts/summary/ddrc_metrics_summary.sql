@@ -8,6 +8,9 @@ with epa_count_phase1_complete as (
     select
         'cleanup_phase1_complete' as metric_name,
         sum(public_status_count) as metric_value,
+        'count' as metric_type,
+        'cleanups completed' as metric_unit_label,
+        'Daily' as update_frequency, --acceptable values for this field are 'As needed', 'Daily', 'Weekly', or 'Monthly'
         last_updated
     from {{ ref('public_status_by_land_use_and_fire_name_counted') }}
     where

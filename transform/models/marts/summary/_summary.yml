@@ -15,11 +15,11 @@ models:
           - type: not_null
           - type: unique # note: Snowflake accepts this constraint, but does not enforce it. For show / metadata only
         data_tests:
-          - unique
           - not_null
+          - unique
       - name: metric_value
-        description: Latest for metric
-        data_type: int
+        description: Latest value for metric
+        data_type: numeric
         constraints:
           - type: not_null
         data_tests:
@@ -31,4 +31,3 @@ models:
           - type: not_null
         data_tests:
           - not_null
-          

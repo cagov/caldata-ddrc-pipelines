@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: EPA
     database: RAW_DDRC_PRD
-    schema: EPA
+    schema: EPA_AGOL_ASSESSMENT
     description: Unknown.
     tables:
       - name: PUBLIC_STATUS_ASSESSMENT

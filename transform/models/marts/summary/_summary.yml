@@ -44,10 +44,10 @@ models:
         data_type: string
         constraints:
           - type: not_null
-        data_tests: 
+        data_tests:
           - not_null
           - accepted_values: # is this test overkill?
-              values: ['As needed', 'Daily', 'Weekly', 'Monthly'] # these values are taken from the Airtable
+              values: ["As needed", "Daily", "Weekly", "Monthly"] # these values are taken from the Airtable
       - name: last_updated
         description: Most recent update timestamp
         data_type: timestamp

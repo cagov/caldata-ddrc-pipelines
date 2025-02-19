@@ -14,6 +14,7 @@ models:
         constraints:
           - type: not_null
           - type: unique # note: Snowflake accepts this constraint, but does not enforce it. For show / metadata only
+            warn_unenforced = false
         data_tests:
           - not_null
           - unique
@@ -24,6 +25,29 @@ models:
           - type: not_null
         data_tests:
           - not_null
+      - name: metric_type
+        description: Category of metric
+        data_type: string
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+      - name: metric_unit_label
+        description: Longer description of what metric measure
+        data_type: string
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+      - name: update_frequency
+        description: How often this metric is updated
+        data_type: string
+        constraints:
+          - type: not_null
+        data_tests: 
+          - not_null
+          - accepted_values: #is this test overkill? I like having another check on the model wherever possible, and it's nice to enforce data quality where we can. but the benefit of this test seems slim (failure would most likely just be due to a mis-type in the mart model). happy to remove if seems unneccessary.
+              values: ['As needed', 'Daily', 'Weekly', 'Monthly'] #these values are taken from the Airtable, where this field is a dropdown
       - name: last_updated
         description: Most recent update timestamp
         data_type: timestamp

@@ -9,16 +9,12 @@ def email_fire_assessment_report(session: snowpark.Session, emails: str) -> str:
     job = session.sql(
         """
         select
-            "FireName" as "Fire Name",
-            "LandUse" as "Land Use",
-            "PublicStatus" as "Status",
-            count(*) as "Count"
-        from raw_ddrc_prd.epa.public_status_assessment
-        where _load_date = (
-          select max(_load_date) from raw_ddrc_prd.epa.public_status_assessment
-        )
-        group by "FireName", "LandUse", "PublicStatus"
-        order by "FireName", "LandUse", "PublicStatus"
+            fire_name as "Fire Name",
+            land_use as "Land Use",
+            public_status as "Status",
+            public_status_count as "Count"
+        from analytics_ddrc_prd.epa.public_status_by_land_use_and_fire_name_counted
+        order by fire_name, land_use, public_status
         """
     ).collect_nowait()
     df = job.to_df().to_pandas()
@@ -79,5 +75,5 @@ if __name__ == "__main__":
     # This feels very fragile
     session.sql(
         """grant usage on procedure email_fire_assessment_report(varchar)
-        to role loader_ddrc_prd"""
+        to role reporter_ddrc_prd"""
     ).collect()

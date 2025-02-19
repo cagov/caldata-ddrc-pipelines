@@ -3,17 +3,16 @@ on:
   schedule:
     # Run at 8AM Pacific (16:00 UTC)
     - cron: "4 16 * * *"
+  push:
+    branches:
+      - nightly-dbt-build
   # Also allow for manual triggers
   workflow_dispatch:
 
 env:
-  SNOWFLAKE_DATABASE: RAW_DDRC_PRD
-  SNOWFLAKE_ROLE: LOADER_DDRC_PRD
-  SNOWFLAKE_WAREHOUSE: LOADING_XS_DDRC_PRD
   SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
   SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_PRD }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
-  FIRE_REPORT_RECIPIENTS: ${{ SECRETS.FIRE_REPORT_RECIPIENTS }}
 
 jobs:
   nightly:
@@ -33,7 +32,29 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-      - name: Run assessment job
+      - name: Load data
+        env:
+          SNOWFLAKE_ROLE: LOADER_DDRC_PRD
+          SNOWFLAKE_DATABASE: RAW_DDRC_PRD
+          SNOWFLAKE_WAREHOUSE: LOADING_XS_DDRC_PRD
         run: |
           poetry run python -m jobs.load_la_fire_assessment
+      - name: Build dbt project
+        env:
+          DBT_PROFILES_DIR: transform/ci
+          DBT_ANALYTICS_DB: ANALYTICS_DDRC_PRD
+          DBT_RAW_DB: RAW_DDRC_PRD
+          SNOWFLAKE_ROLE: TRANSFORMER_DDRC_PRD
+          SNOWFLAKE_DATABASE: TRANSFORM_DDRC_PRD
+          SNOWFLAKE_WAREHOUSE: TRANSFORMING_XS_DDRC_PRD
+        run: |
+          poetry run dbt deps --project-dir transform --target prd
+          poetry run dbt build --project-dir transform --target prd
+      - name: Reporting
+        env:
+          SNOWFLAKE_ROLE: REPORTER_DDRC_PRD
+          SNOWFLAKE_DATABASE: ANALYTICS_DDRC_PRD
+          SNOWFLAKE_WAREHOUSE: REPORTING_XS_DDRC_PRD
+          FIRE_REPORT_RECIPIENTS: ${{ SECRETS.FIRE_REPORT_RECIPIENTS }}
+        run: |
           poetry run python -m jobs.send_la_fire_assessment_email_report

@@ -31,3 +31,4 @@ models:
           - type: not_null
         data_tests:
           - not_null
+          

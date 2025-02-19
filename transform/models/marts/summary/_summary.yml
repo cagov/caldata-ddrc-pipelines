@@ -46,8 +46,8 @@ models:
           - type: not_null
         data_tests: 
           - not_null
-          - accepted_values: #is this test overkill? I like having another check on the model wherever possible, and it's nice to enforce data quality where we can. but the benefit of this test seems slim (failure would most likely just be due to a mis-type in the mart model). happy to remove if seems unneccessary.
-              values: ['As needed', 'Daily', 'Weekly', 'Monthly'] #these values are taken from the Airtable, where this field is a dropdown
+          - accepted_values: # is this test overkill?
+              values: ['As needed', 'Daily', 'Weekly', 'Monthly'] # these values are taken from the Airtable
       - name: last_updated
         description: Most recent update timestamp
         data_type: timestamp

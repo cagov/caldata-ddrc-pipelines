@@ -49,3 +49,4 @@ models:
       summary:
         +schema: summary
         +materialized: table
+        

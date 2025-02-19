@@ -165,7 +165,9 @@ def gdf_to_snowflake(
         # Ensure that the geometry columns are properly oriented and valid geometries.
         gdf = gdf.assign(
             **{
-                name: gdf[name].make_valid().apply(shapely.ops.orient, args=(1,))
+                name: gdf[name]
+                .make_valid()
+                .apply(lambda s: shapely.ops.orient(s, 1) if not s.is_empty else s)
                 for name, dtype in gdf.dtypes.items()
                 if isinstance(dtype, geopandas.array.GeometryDtype)
             }
@@ -203,6 +205,7 @@ def gdf_to_snowflake(
             chunk_size=chunk_size,
             auto_create_table=True,
             quote_identifiers=True,
+            use_logical_type=True,
         )
 
         # Identify the geometry columns so we can cast them to the appropriate type

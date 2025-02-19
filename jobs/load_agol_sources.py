@@ -2,12 +2,11 @@ from __future__ import annotations
 
 import random
 import string
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pandas
-import requests
 
-from jobs.utils.geo import gdf_from_esri_feature_service
+from jobs.utils.geo import gdf_from_esri_feature_service, get_with_backoff
 from jobs.utils.snowflake import (
     gdf_to_snowflake,
     snowflake_connection_from_environment,
@@ -18,7 +17,7 @@ if TYPE_CHECKING:
     import geopandas
 
 
-datasets = [
+datasets: list[dict[str, Any]] = [
     {
         "schema": "EPA_AGOL_ASSESSMENT",
         "name": "PUBLIC_STATUS_ASSESSMENT",
@@ -28,12 +27,25 @@ datasets = [
         ),
         "merge_on": ["OBJECTID", "_LOAD_DATE"],
     },
+    {
+        "schema": "USACE_AGOL_DEBRIS",
+        "name": "PARCEL_DEBRIS_REMOVAL",
+        "url": (
+            "https://jecop-public.usace.army.mil/arcgis/rest/services/"
+            "Debris/USACE_Debris_Parcels_Southern_California/FeatureServer/0/"
+        ),
+        "merge_on": ["OBJECTID", "_LOAD_DATE"],
+        # The USACE seems to have some bad SSL settings on their public-facing AGOL.
+        # A bit concerning...
+        "verify": False,
+    },
 ]
 
 if __name__ == "__main__":
     for d in datasets:
-        name: str = d["name"]  # type: ignore
-        url: str = d["url"]  # type: ignore
+        name: str = d["name"]
+        url: str = d["url"]
+        verify = d.get("verify", True)
         print(f"Loading {d['name']}")
         snowflake_conn = snowflake_connection_from_environment(schema=d["schema"])
         try:
@@ -42,13 +54,19 @@ if __name__ == "__main__":
             )
 
             # Last edit information lives in the JSON metadata
-            metadata = requests.get(url + "?f=pjson").json()
+            metadata = get_with_backoff(url + "?f=pjson", verify=verify).json()
+            last_edit_date = metadata.get("editingInfo", {}).get("lastEditDate")
 
             # Add a load date column, as we will be re-loading the dataset daily
-            gdf: geopandas.GeoDataFrame = gdf_from_esri_feature_service(url).assign(
-                _LOAD_DATE=pandas.Timestamp.today(tz="America/Los_Angeles").date(),
-                _LAST_EDIT_DATE=metadata.get("editingInfo", {}).get("lastEditDate"),
-            )  # type: ignore
+            gdf: geopandas.GeoDataFrame = (
+                gdf_from_esri_feature_service(url, verify=verify).assign(
+                    _LOAD_DATE=pandas.Timestamp.today(tz="America/Los_Angeles").date(),
+                )  # type: ignore
+            )
+            if last_edit_date:
+                gdf = gdf.assign(_LAST_EDIT_DATE=last_edit_date)  # type: ignore
+            else:
+                gdf = gdf.assign(_LOADED_AT=pandas.Timestamp.now(tz="UTC"))  # type: ignore
 
             # Load to Snowflake
             if not table_exists(snowflake_conn, name):

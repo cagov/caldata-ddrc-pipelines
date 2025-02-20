@@ -47,6 +47,7 @@ jobs:
         run: |
           poetry run dbt deps --project-dir transform --target prd
           poetry run dbt build --project-dir transform --target prd
+          poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd
       - name: Reporting
         env:
           SNOWFLAKE_ROLE: REPORTER_DDRC_PRD

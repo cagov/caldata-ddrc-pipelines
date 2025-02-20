@@ -6,7 +6,6 @@ models:
       contract:
         enforced: true
         warn_unenforced: false
-      post_hook: "{{ unload_ddrc_metrics() }}"
     description: |
       All metrics for the Digital Disaster Recovery Center. Each metric overwrites its previous entry on every update.
     columns:

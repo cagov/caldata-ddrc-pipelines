@@ -45,5 +45,6 @@ models:
         +schema: epa
         +materialized: table
       summary:
+        +post-hook: "{{ unload_ddrc_metrics() }}"
         +schema: summary
         +materialized: table

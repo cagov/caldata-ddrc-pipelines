@@ -1,6 +1,6 @@
 {% macro unload_ddrc_metrics() -%}
   {% if target.name == 'prd' %}
-    {% set stage = '@ANALYTICS_DDRC_DEV.PUBLIC.MARTS' %}
+    {% set stage = '@ANALYTICS_DDRC_PRD.PUBLIC.AZURE_STAGE_DDRC' %}
   {% else %}
     {% set stage = '@ANALYTICS_DDRC_DEV.PUBLIC.MARTS' %}
   {% endif %}

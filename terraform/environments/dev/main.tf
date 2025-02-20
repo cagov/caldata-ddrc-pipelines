@@ -146,7 +146,7 @@ module "marts" {
   prefix                                     = "${local.owner}-${local.project}-${local.environment}"
   region                                     = local.region
   snowflake_storage_integration_iam_user_arn = local.storage_aws_iam_user_arn
-  # snowflake_storage_integration_external_id  = local.storage_aws_external_id
+  snowflake_storage_integration_external_id  = local.storage_aws_external_id
 }
 
 

@@ -46,8 +46,9 @@ locals {
   # These are circular dependencies on the outputs. Unfortunate, but
   # necessary, as we don't know them until we've created the storage
   # integration, which itself depends on the assume role policy.
-  # storage_aws_external_id  = "NGB13288_SFCRole=2_YhkANpChE8XgIr7PAY6q5lOqIf0="
-  storage_aws_iam_user_arn = "676096391788"
+  storage_aws_external_id  = "HEB41095_SFCRole=2_9UsEjw4IeEbA2cjcrJmBfX4AtGg="
+  storage_aws_iam_user_arn = "arn:aws:iam::742950179262:user/erq60000-s"
+
 }
 
 

@@ -56,41 +56,46 @@ locals {
 # blocks with different roles, and require that all snowflake resources explicitly
 # flag the role they want for the creator.
 provider "snowflake" {
-  account_name      = var.account_name
-  organization_name = var.organization_name
-  role              = "PUBLIC"
+  account_name             = var.account_name
+  organization_name        = var.organization_name
+  role                     = "PUBLIC"
+  preview_features_enabled = ["snowflake_storage_integration_resource", "snowflake_stage_resource"]
 }
 
 # Snowflake provider for account administration (to be used only when necessary).
 provider "snowflake" {
-  alias             = "accountadmin"
-  role              = "ACCOUNTADMIN"
-  account_name      = var.account_name
-  organization_name = var.organization_name
+  alias                    = "accountadmin"
+  role                     = "ACCOUNTADMIN"
+  account_name             = var.account_name
+  organization_name        = var.organization_name
+  preview_features_enabled = ["snowflake_storage_integration_resource", "snowflake_stage_resource"]
 }
 
 # Snowflake provider for creating databases, warehouses, etc.
 provider "snowflake" {
-  alias             = "sysadmin"
-  role              = "SYSADMIN"
-  account_name      = var.account_name
-  organization_name = var.organization_name
+  alias                    = "sysadmin"
+  role                     = "SYSADMIN"
+  account_name             = var.account_name
+  organization_name        = var.organization_name
+  preview_features_enabled = ["snowflake_storage_integration_resource", "snowflake_stage_resource"]
 }
 
 # Snowflake provider for managing grants to roles.
 provider "snowflake" {
-  alias             = "securityadmin"
-  role              = "SECURITYADMIN"
-  account_name      = var.account_name
-  organization_name = var.organization_name
+  alias                    = "securityadmin"
+  role                     = "SECURITYADMIN"
+  account_name             = var.account_name
+  organization_name        = var.organization_name
+  preview_features_enabled = ["snowflake_storage_integration_resource", "snowflake_stage_resource"]
 }
 
 # Snowflake provider for managing user accounts and roles.
 provider "snowflake" {
-  alias             = "useradmin"
-  role              = "USERADMIN"
-  account_name      = var.account_name
-  organization_name = var.organization_name
+  alias                    = "useradmin"
+  role                     = "USERADMIN"
+  account_name             = var.account_name
+  organization_name        = var.organization_name
+  preview_features_enabled = ["snowflake_storage_integration_resource", "snowflake_stage_resource"]
 }
 
 provider "aws" {
@@ -136,9 +141,9 @@ module "marts" {
     snowflake.useradmin     = snowflake.useradmin,
   }
 
-  environment = upper("${local.project}_${local.environment}")
-  prefix      = "${local.owner}-${local.project}-${local.environment}"
-  region      = local.region
+  environment                                = upper("${local.project}_${local.environment}")
+  prefix                                     = "${local.owner}-${local.project}-${local.environment}"
+  region                                     = local.region
   snowflake_storage_integration_iam_user_arn = local.storage_aws_iam_user_arn
   # snowflake_storage_integration_external_id  = local.storage_aws_external_id
 }

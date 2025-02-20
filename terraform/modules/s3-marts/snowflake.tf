@@ -9,7 +9,7 @@ resource "snowflake_storage_integration" "storage_integration" {
   type                      = "EXTERNAL_STAGE"
   storage_provider          = "S3"
   storage_aws_role_arn      = aws_iam_role.snowflake_storage_integration.arn
-  storage_allowed_locations = [aws_s3_bucket.marts.id]
+  storage_allowed_locations = ["s3://${aws_s3_bucket.marts.id}"]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "storage_integration_to_sysadmin" {
@@ -26,7 +26,7 @@ resource "snowflake_grant_privileges_to_account_role" "storage_integration_to_sy
 resource "snowflake_stage" "marts" {
   provider            = snowflake.sysadmin
   name                = "MARTS"
-  url                 = aws_s3_bucket.marts.id
+  url                 = "s3://${aws_s3_bucket.marts.id}"
   database            = "ANALYTICS_${var.environment}"
   schema              = "PUBLIC"
   storage_integration = snowflake_storage_integration.storage_integration.name
@@ -36,7 +36,7 @@ resource "snowflake_stage" "marts" {
 
 resource "snowflake_grant_privileges_to_account_role" "marts" {
   provider          = snowflake.sysadmin
-  account_role_name = "TRANSFORMER_DDRC_${var.environment}"
+  account_role_name = "TRANSFORMER_${var.environment}"
   privileges        = ["USAGE"]
   on_schema_object {
     object_type = "STAGE"

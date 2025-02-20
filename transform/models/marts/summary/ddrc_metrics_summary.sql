@@ -1,9 +1,3 @@
-{{
-  config(
-    materialized = "table"
-  )
-}}
-
 with epa_count_phase1_complete as (
     select
         'cleanup_phase1_complete' as metric_name,

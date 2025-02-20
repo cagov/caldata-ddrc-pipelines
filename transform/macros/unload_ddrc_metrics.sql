@@ -4,8 +4,9 @@
   {% else %}
     {% set stage = '@ANALYTICS_DDRC_DEV.PUBLIC.MARTS' %}
   {% endif %}
-  {% set key = 'ddrc-metrics.json' %}
-  {% set url = stage ~ '/' ~ key %}
+  {% set file_key = 'ddrc-metrics.json' %}
+  {% set url = stage ~ '/' ~ file_key %}
+      {{ log('Unloading ' ~ this ~ ' to ' ~ url, info=true) }}
       copy into {{ url }}
       from (
         select array_agg(object_construct(*)) from {{ this }}

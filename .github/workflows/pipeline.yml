@@ -1,7 +1,9 @@
-name: nightly
+name: pipeline
 on:
   schedule:
-    # Run at 8AM Pacific (16:00 UTC)
+    # Run a main hourly job
+    - cron: "27 * * * *"
+    # Run a special job at 8AM Pacific (16:00 UTC) which is used for the email report
     - cron: "4 16 * * *"
   # Also allow for manual triggers
   workflow_dispatch:
@@ -12,7 +14,7 @@ env:
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 
 jobs:
-  nightly:
+  pipeline:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,8 +26,6 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - uses: snok/install-poetry@v1
-        with:
-          virtualenvs-create: false
       - name: Install dependencies
         run: |
           poetry install
@@ -48,6 +48,7 @@ jobs:
           poetry run dbt deps --project-dir transform --target prd
           poetry run dbt build --project-dir transform --target prd
       - name: Reporting
+        if: github.event_name == "schedule" && github.event.schedule == "4 16 * * *"
         env:
           SNOWFLAKE_ROLE: REPORTER_DDRC_PRD
           SNOWFLAKE_DATABASE: ANALYTICS_DDRC_PRD

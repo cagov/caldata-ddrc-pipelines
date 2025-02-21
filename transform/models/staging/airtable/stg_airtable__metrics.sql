@@ -18,7 +18,7 @@ with air as (
         g.value::varchar as topic,
         h.value::varchar as update_frequency
 
-    from {{ source('AIRTABLE','METRICS') }} m,
+    from {{ source('AIRTABLE','METRICS') }} as m,
         lateral flatten(metrics.metric_type_from_metric_definition_) as a,
         lateral flatten(metrics.as_of_time_from_metric_definition_) as b,
         lateral flatten(metrics.metric_name_from_metric_definition_) as c,

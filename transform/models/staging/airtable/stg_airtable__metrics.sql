@@ -9,25 +9,24 @@ with air as (
         datetime_offset_variable,
         date_metric_modified,
         metric,
-        a.value::varchar AS metric_type,
-        b.value::varchar AS as_of_time,
-        c.value::varchar AS metric_name,
-        d.value::varchar AS metric_unit_label,
-        e.value::varchar AS metric_title_for_interface,
-        f.value::varchar AS metric_machine_name,
-        g.value::varchar AS topic,
-        h.value::varchar AS update_frequency
-    from metrics,
-        lateral FLATTEN(metrics.metric_type_from_metric_definition_) a,
-        lateral FLATTEN(metrics.as_of_time_from_metric_definition_) b,
-        lateral FLATTEN(metrics.metric_name_from_metric_definition_) c,
-        lateral FLATTEN(metrics.metric_unit_label_from_metric_definition_) d,
-        lateral FLATTEN(metrics.metric_title_for_interface) e,
-        lateral FLATTEN(metrics.metric_machine_name_from_metric_definition_) f,
-        lateral FLATTEN(metrics.topic_from_metric_definition_) g,
-        lateral FLATTEN(metrics.update_frequency_from_metric_definition_) h
+        a.value::varchar as metric_type,
+        b.value::varchar as as_of_time,
+        c.value::varchar as metric_name,
+        d.value::varchar as metric_unit_label,
+        e.value::varchar as metric_title_for_interface,
+        f.value::varchar as metric_machine_name,
+        g.value::varchar as topic,
+        h.value::varchar as update_frequency
 
-    from {{ source('AIRTABLE','METRICS') }}
+    from {{ source('AIRTABLE','METRICS') }},
+        lateral flatten(metrics.metric_type_from_metric_definition_) a,
+        lateral flatten(metrics.as_of_time_from_metric_definition_) b,
+        lateral flatten(metrics.metric_name_from_metric_definition_) c,
+        lateral flatten(metrics.metric_unit_label_from_metric_definition_) d,
+        lateral flatten(metrics.metric_title_for_interface) e,
+        lateral flatten(metrics.metric_machine_name_from_metric_definition_) f,
+        lateral flatten(metrics.topic_from_metric_definition_) g,
+        lateral flatten(metrics.update_frequency_from_metric_definition_) h
 
 )
 

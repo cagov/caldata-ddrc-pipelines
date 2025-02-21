@@ -43,6 +43,12 @@ airtable_metrics as (
     from {{ ref('airtable__most_recent_metrics') }}
     where
         metric_name not in (select metric_name from pipeline_metrics)
+),
+
+ddrc_metrics as (
+    select * from pipeline_metrics
+    union all
+    select * from airtable_metrics
 )
 
 select * from ddrc_metrics

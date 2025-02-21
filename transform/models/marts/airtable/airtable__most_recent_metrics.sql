@@ -13,11 +13,10 @@ max_modified as (
         metric_unit_label,
         update_frequency,
         date_metric_modified,
-        max (date_metric_modified)
+        max(date_metric_modified)
             over (partition by metric_name) as last_updated
-  from air
-  )
+    from air
+)
 
-  select * from max_modified
-  where date_metric_modified = last_updated
-
+select * from max_modified
+where date_metric_modified = last_updated

@@ -32,7 +32,7 @@ datasets: list[dict[str, Any]] = [
         "name": "PARCEL_DEBRIS_REMOVAL",
         "url": (
             "https://jecop-public.usace.army.mil/arcgis/rest/services/"
-            "Debris/USACE_Debris_Parcels_Southern_California/FeatureServer/0/"
+            "USACE_Debris_Parcels_Southern_California_Public/MapServer/0"
         ),
         "merge_on": ["OBJECTID", "_LOAD_DATE"],
         # The USACE seems to have some bad SSL settings on their public-facing AGOL.

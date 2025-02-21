@@ -32,6 +32,9 @@ models:
       epa:
         +schema: epa
         +materialized: view
+      airtable:
+        +schema: airtable
+        +materialized: view
 
     intermediate:
       epa:
@@ -44,6 +47,9 @@ models:
       epa:
         +schema: epa
         +materialized: table
+      airtable:
+        +schema: airtable
+        +materialized: view
       summary:
         +schema: summary
         +materialized: table

@@ -19,11 +19,30 @@ with epa_count_phase1_complete as (
     group by public_status, last_updated
 ),
 
--- As additional metrics are added to the DDRC, union them here:
-ddrc_metrics as (
+--As additional automated metrics (as in, metrics that are not
+--manually entered into the airtable are added to the DDRC,
+--union them together here:
+pipeline_metrics as (
     select * from epa_count_phase1_complete
     -- union all
     --select * from acoe_metric
-)
+),
+
+--The Airtable captures all metrics, including those
+--entered manually,
+--we will use it to add in any of the metrics
+--that we do not have automated pipelines for yet:
+airtable_metrics as (
+    select
+        metric_machine_name as metric_name,
+        metric as metric_value,
+        metric_type,
+        metric_unit_label,
+        update_frequency,
+        last_updated
+    from {{ ref('airtable__most_recent_metrics') }}
+    where
+        metric_name not in (select metric_name from pipeline_metrics)
+),
 
 select * from ddrc_metrics

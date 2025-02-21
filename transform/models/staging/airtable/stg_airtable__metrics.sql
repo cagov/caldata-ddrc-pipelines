@@ -7,7 +7,7 @@ with air as (
         date_created,
         as_of_label,
         datetime_offset_variable,
-        date_metric_modified,
+        to_timestamp(date_metric_modified) as date_metric_modified,
         metric,
         a.value::varchar as metric_type,
         b.value::varchar as as_of_time,

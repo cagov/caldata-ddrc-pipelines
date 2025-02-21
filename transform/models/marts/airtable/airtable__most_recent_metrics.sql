@@ -8,7 +8,7 @@ with air as (
 max_modified as (
     select
         metric_machine_name,
-        metric,
+        to_numeric(metric) as metric,
         metric_type,
         metric_unit_label,
         update_frequency,

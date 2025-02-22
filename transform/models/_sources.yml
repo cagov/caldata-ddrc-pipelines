@@ -22,3 +22,32 @@ sources:
           - name: _LAST_EDIT_DATE
           - name: _LOAD_DATE
           - name: geometry
+
+  - name: AIRTABLE
+    database: RAW_DDRC_PRD
+    schema: ODI_AIRTABLE_LA_RECOVERY_METRICS_APPL6HFEE8UDLUC3G
+    description: ODI Airtable for DDRC
+    tables:
+      - name: METRICS
+        description: ODI Airtable for collecting DDRC metrics that cannot be automated (yet).
+        columns:
+          - name: ID
+          - name: _FIVETRAN_SYNCED
+          - name: DATETIME_OFFSET_NUMBER
+          - name: METRIC_TYPE_FROM_METRIC_DEFINITION_
+          - name: DATE_CREATED
+          - name: AS_OF_TIME_FROM_METRIC_DEFINITION_
+          - name: METRIC_NAME_FROM_METRIC_DEFINITION_
+          - name: AS_OF_LABEL
+          - name: METRIC_CONTACT_EMAIL_FROM_METRIC_DEFINITION_
+          - name: METRIC_UNIT_LABEL_FROM_METRIC_DEFINITION_
+          - name: METRIC_DEFINITION
+          - name: METRIC_TITLE_FOR_INTERFACE
+          - name: DATETIME_OFFSET_VARIABLE
+          - name: METRIC_MACHINE_NAME_FROM_METRIC_DEFINITION_
+          - name: METRIC_CONTACT_NAME_FROM_METRIC_DEFINITION_
+          - name: TOPIC_FROM_METRIC_DEFINITION_
+          - name: UPDATE_FREQUENCY_FROM_METRIC_DEFINITION_
+          - name: METRIC_MODIFIED_BY
+          - name: DATE_METRIC_MODIFIED
+          - name: METRIC

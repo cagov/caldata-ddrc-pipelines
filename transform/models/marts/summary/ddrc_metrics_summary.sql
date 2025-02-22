@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized = "table"
+  )
+}}
+
 with epa_count_phase1_complete as (
     select
         'cleanup_phase1_complete' as metric_name,
@@ -13,13 +19,25 @@ with epa_count_phase1_complete as (
     group by public_status, last_updated
 ),
 
+usace_parcel_debris_metrics as (
+    select
+        metric_name,
+        metric_value,
+        'count' as metric_type,
+        metric_unit_label,
+        'Daily' as update_frequency,
+        last_updated
+    from {{ ref('usace__dashboard_metrics') }}
+),
+
 --As additional automated metrics (as in, metrics that are not
 --manually entered into the airtable are added to the DDRC,
 --union them together here:
 pipeline_metrics as (
     select * from epa_count_phase1_complete
-    -- union all
-    --select * from acoe_metric
+    union all
+    select * from usace_parcel_debris_metrics
+
 ),
 
 --The Airtable captures all metrics, including those

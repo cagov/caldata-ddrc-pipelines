@@ -51,3 +51,27 @@ sources:
           - name: METRIC_MODIFIED_BY
           - name: DATE_METRIC_MODIFIED
           - name: METRIC
+
+  - name: USACE
+    database: RAW_DDRC_PRD
+    schema: USACE_AGOL_DEBRIS
+    description: From USACE API
+    tables:
+      - name: PARCEL_DEBRIS_REMOVAL
+        description: Unknown
+        columns:
+          - name: ma
+          - name: APN
+          - name: apn_coincident_list
+          - name: address
+          - name: epa_status
+          - name: roe_status
+          - name: hsa_status
+          - name: pcr_status
+          - name: fso_pkg_returned
+          - name: OBJECTID
+          - name: GDB_TO_DATE
+          - name: GDB_FROM_DATE
+          - name: geometry
+          - name: _LOAD_DATE
+          - name: _LOADED_AT

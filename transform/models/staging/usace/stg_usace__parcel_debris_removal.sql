@@ -10,12 +10,12 @@ with pdr as (
         "hsa_status" as hsa_status,
         "pcr_status" as pcr_status,
         "fso_pkg_returned" as fso_pkg_returned,
-        OBJECTID as object_id,
-        GDB_TO_DATE as gdb_to_date,
-        GDB_FROM_DATE as gdb_from_date,
+        objectid as object_id,
+        gdb_to_date,
+        gdb_from_date,
         "geometry" as geometry,
-        _LOAD_DATE,
-        to_timestamp(_LOADED_AT) as last_updated
+        _load_date,
+        to_timestamp(_loaded_at) as last_updated
 
     from {{ source('USACE','PARCEL_DEBRIS_REMOVAL') }}
 

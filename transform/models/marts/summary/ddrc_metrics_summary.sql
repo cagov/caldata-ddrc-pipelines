@@ -21,12 +21,12 @@ with epa_count_phase1_complete as (
 
 usace_parcel_debris_metrics as (
     select
-    metric_name,
-    metric_value,
-    'count' as metric_type,
-    metric_unit_label,
-    'Daily' as update_frequency,
-    last_updated
+        metric_name,
+        metric_value,
+        'count' as metric_type,
+        metric_unit_label,
+        'Daily' as update_frequency,
+        last_updated
     from {{ ref('usace__dashboard_metrics') }}
 ),
 

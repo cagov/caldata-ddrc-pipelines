@@ -8,15 +8,15 @@ with air as (
 max_modified as (
     select
         metric_machine_name,
-        to_numeric(metric) as metric,
+        to_number(metric, 10, 2) as metric,
         metric_type,
         metric_unit_label,
         update_frequency,
-        date_metric_modified,
-        max(date_metric_modified)
+        date_created,
+        max(date_created)
             over (partition by metric_name) as last_updated
     from air
 )
 
 select * from max_modified
-where date_metric_modified = last_updated
+where date_created = last_updated

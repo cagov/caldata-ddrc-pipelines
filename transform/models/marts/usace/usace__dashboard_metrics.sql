@@ -5,48 +5,48 @@ with usace as (
 ),
 
 roe_status as (
-    select 
+    select
     'roes accepted' as metric_name,
     'TK' as metric_unit_label,
     count(distinct object_id) as metric_value,
     last_updated
     from usace
-        where 
+        where
             (roe_status <> 'not_received'
             OR hsa_status <> 'not_received'
             OR hsa_status = 'not_received'
             )
         and
-            roe_status IN ('approved', 'submitted') 
+            roe_status IN ('approved', 'submitted')
     group by all
 ),
 
 in_queue as (
-    select 
+    select
     'in queue with contractors' as metric_name,
     'TK' as metric_unit_label,
     count(distinct object_id) as metric_value,
     last_updated
     from usace
-where 
+where
     (roe_status <> 'not_received'
     OR hsa_status <> 'not_received'
     OR hsa_status = 'not_received'
     )
 AND
-    roe_status in ('submitted') 
+    roe_status in ('submitted')
 group by all
 
 ),
 
 fso_return as (
-    select 
-    'fso package returned' as metric_name, 
+    select
+    'fso package returned' as metric_name,
     'TK' as metric_unit_label,
     count(distinct object_id) as metric_value,
     last_updated
         from usace
-            where 
+            where
                 fso_pkg_returned is not null
     group by all
 ),

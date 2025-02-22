@@ -37,7 +37,7 @@ pipeline_metrics as (
     select * from epa_count_phase1_complete
     union all
     select * from usace_parcel_debris_metrics
-    
+
 ),
 
 --The Airtable captures all metrics, including those

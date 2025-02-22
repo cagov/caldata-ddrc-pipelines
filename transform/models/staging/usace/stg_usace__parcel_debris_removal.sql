@@ -14,7 +14,7 @@ with pdr as (
         GDB_TO_DATE as gdb_to_date,
         GDB_FROM_DATE as gdb_from_date,
         "geometry" as geometry,
-        _LOAD_DATE, 
+        _LOAD_DATE,
         to_timestamp(_LOADED_AT) as last_updated
 
     from {{ source('USACE','PARCEL_DEBRIS_REMOVAL') }}

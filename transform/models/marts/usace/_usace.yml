@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: usace__dashboard_metrics
+    description: |
+      Replicating the dashboard metrics from USACE LA Fire website
+    columns:
+      - name: metric_name
+      - name: metric_value
+      - name: last_updated

@@ -12,14 +12,7 @@ roe_status as (
         count(distinct object_id) as metric_value,
         last_updated
     from usace
-    where
-        (
-            roe_status <> 'not_received'
-            or hsa_status <> 'not_received'
-            or hsa_status = 'not_received'
-        )
-        and
-        roe_status in ('approved', 'submitted')
+    where roe_approved is not null
     group by all
 ),
 
@@ -30,14 +23,7 @@ in_queue as (
         count(distinct object_id) as metric_value,
         last_updated
     from usace
-    where
-        (
-            roe_status <> 'not_received'
-            or hsa_status <> 'not_received'
-            or hsa_status = 'not_received'
-        )
-        and
-        roe_status in ('submitted')
+    where roe_submitted is not null
     group by all
 
 ),
@@ -49,8 +35,7 @@ fso_return as (
         count(distinct object_id) as metric_value,
         last_updated
     from usace
-    where
-        fso_pkg_returned is not null
+    where fso_pkg_returned is not null
     group by all
 ),
 

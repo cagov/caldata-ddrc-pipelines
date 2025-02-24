@@ -95,10 +95,10 @@ if __name__ == "__main__":
                     [f'''{name}."{k}" = {tmp}."{k}"''' for k in non_merge_cols]
                 )
                 when_not_matched_insert = ",\n".join(
-                    [f'''"{k}"''' for k in non_merge_cols]
+                    [f'''"{k}"''' for k in gdf.columns]
                 )
                 when_not_matched_values = ",\n".join(
-                    [f'''{tmp}."{k}"''' for k in non_merge_cols]
+                    [f'''{tmp}."{k}"''' for k in gdf.columns]
                 )
                 snowflake_conn.cursor().execute(
                     f"""

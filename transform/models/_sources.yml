@@ -75,3 +75,19 @@ sources:
           - name: geometry
           - name: _LOAD_DATE
           - name: _LOADED_AT
+
+  - name: PAGE_FEEDBACK
+    database: RAW_DDRC_PRD
+    schema: ODI_DYNAMODB
+    description: Data from ODI's DynamoDB instance
+    tables:
+      - name: LA_FIRES_PAGE_FEEDBACK
+        description: Page Feedback form submissions from the LA Fires website
+        columns:
+          - name: feedback_key
+          - name: site_domain
+          - name: comments
+          - name: page
+          - name: time
+          - name: url
+          - name: page_section

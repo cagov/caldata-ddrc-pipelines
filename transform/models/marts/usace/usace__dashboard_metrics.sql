@@ -1,8 +1,9 @@
 with usace as (
 
-    select * from {{ ref('stg_usace__parcel_debris_removal') }}
+    select * from {{ ref('int_usace__most_recent_debris_removal') }}
 
 ),
+
 
 roe_status as (
     select

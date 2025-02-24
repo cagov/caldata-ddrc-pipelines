@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: int_usace__most_recent_debris_removal
+    description: |
+      TK
+    columns:
+      - name: epa_status,
+      - name: roe_status,
+      - name: hsa_status,
+      - name: pcr_status,
+      - name: fso_pkg_returned,
+      - name: object_id,
+      - name: _load_date,
+      - name: to_timestamp(_loaded_at) as last_updated

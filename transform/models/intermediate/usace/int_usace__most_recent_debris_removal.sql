@@ -10,6 +10,8 @@ most_recent_pdr_data as (
     select
         epa_status,
         roe_status,
+        roe_approved,
+        roe_submitted,
         hsa_status,
         pcr_status,
         fso_pkg_returned,

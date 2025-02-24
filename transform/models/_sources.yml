@@ -66,9 +66,19 @@ sources:
           - name: address
           - name: epa_status
           - name: roe_status
+          - name: roe_received
+          - name: roe_approved
+          - name: roe_submitted
+          - name: roe_withdrawn
           - name: hsa_status
+          - name: hsa_report_received
+          - name: hsa_report_approved
           - name: pcr_status
+          - name: pcr_received
+          - name: pcr_approved
+          - name: pcr_delivery
           - name: fso_pkg_returned
+          - name: fso_pkg_approved
           - name: OBJECTID
           - name: GDB_TO_DATE
           - name: GDB_FROM_DATE

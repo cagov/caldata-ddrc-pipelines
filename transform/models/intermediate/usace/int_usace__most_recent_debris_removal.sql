@@ -4,15 +4,10 @@ with pdr as (
 
 ),
 
-most_recent_date as (
-    select MAX(last_updated) as max_date
-    from pdr
-),
-
 
 most_recent_pdr_data as (
 
-    select 
+    select
         epa_status,
         roe_status,
         hsa_status,
@@ -21,9 +16,9 @@ most_recent_pdr_data as (
         object_id,
         _load_date,
         last_updated
-    
+
     from pdr
-    inner join most_recent_date as md on pdr.last_updated = md.max_date
+    where last_updated = (select max(last_updated) from pdr)
 
 )
 

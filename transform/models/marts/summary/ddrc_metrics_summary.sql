@@ -63,11 +63,11 @@ ddrc_metrics as (
     select * from airtable_metrics
 )
 
-select 
+select
     metric_name,
     to_number(metric_value, 38, 2) as metric_value,
     metric_type,
     metric_unit_label,
     update_frequency,
-    last_updated 
+    last_updated
 from ddrc_metrics

@@ -6,10 +6,10 @@ models:
       TK
     columns:
       - name: epa_status,
-      - name:   roe_status,
-      - name:   hsa_status,
-      - name:   pcr_status,
-      - name:   fso_pkg_returned,
-      - name:   object_id,
-      - name:   _load_date,
-      - name:   to_timestamp(_loaded_at) as last_updated
+      - name: roe_status,
+      - name: hsa_status,
+      - name: pcr_status,
+      - name: fso_pkg_returned,
+      - name: object_id,
+      - name: _load_date,
+      - name: to_timestamp(_loaded_at) as last_updated

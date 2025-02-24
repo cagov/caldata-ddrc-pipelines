@@ -20,7 +20,7 @@ models:
           - unique
       - name: metric_value
         description: Latest value for metric
-        data_type: number
+        data_type: number(38,2)
         constraints:
           - type: not_null
         data_tests:

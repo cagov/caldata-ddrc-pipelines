@@ -11,12 +11,11 @@ with epa_count_phase1_complete as (
         'count' as metric_type,
         'cleanups completed' as metric_unit_label,
         'Daily' as update_frequency, --acceptable values for this field are 'As needed', 'Daily', 'Weekly', or 'Monthly'
-        last_updated
+        max(last_updated) as last_updated
     from {{ ref('public_status_by_land_use_and_fire_name_counted') }}
     where
-        public_status = 'Phase 1 Complete'
+        public_status in ('Phase 1 Complete', 'Deferred to Phase 2')
         and land_use = 'Residential'
-    group by public_status, last_updated
 ),
 
 usace_parcel_debris_metrics as (

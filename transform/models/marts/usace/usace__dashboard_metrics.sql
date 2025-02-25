@@ -7,7 +7,7 @@ with usace as (
 
 roe_status as (
     select
-        'roes accepted' as metric_name,
+        'phase2_roes_accepted' as metric_name,
         'TK' as metric_unit_label,
         count(distinct object_id) as metric_value,
         last_updated
@@ -18,7 +18,7 @@ roe_status as (
 
 in_queue as (
     select
-        'in queue with contractors' as metric_name,
+        'phase2_parcels_in_queue' as metric_name,
         'TK' as metric_unit_label,
         count(distinct object_id) as metric_value,
         last_updated
@@ -30,7 +30,7 @@ in_queue as (
 
 fso_return as (
     select
-        'fso package returned' as metric_name,
+        'phase2_parcels_completed' as metric_name,
         'TK' as metric_unit_label,
         count(distinct object_id) as metric_value,
         last_updated

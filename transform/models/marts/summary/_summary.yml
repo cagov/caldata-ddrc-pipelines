@@ -47,7 +47,15 @@ models:
         data_tests:
           - not_null
           - accepted_values: # is this test overkill?
-              values: ["As needed", "Daily", "Weekly", "Monthly"] # these values are taken from the Airtable
+              values:
+                [
+                  "As needed",
+                  "Daily",
+                  "Weekly",
+                  "Monthly",
+                  "Completed",
+                  "Content Update",
+                ]
       - name: last_updated
         description: Most recent update timestamp
         data_type: timestamp

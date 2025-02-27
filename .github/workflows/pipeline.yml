@@ -70,4 +70,4 @@ jobs:
                   SLACK_USERNAME: Leo
                   SLACK_TITLE: Workflow ${{ needs.failing-job.result }}
                   MSG_MINIMAL: actions url
-                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+                  SLACK_WEBHOOK: ${{ secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}

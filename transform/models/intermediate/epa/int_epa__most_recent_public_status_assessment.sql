@@ -10,7 +10,7 @@ most_recent_psa_data as (
         public_status,
         land_use,
         fire_name,
-        last_updated
+        convert_timezone('UTC', last_updated) as last_updated
     from psa
     where load_date = (select max(load_date) from psa)
 )

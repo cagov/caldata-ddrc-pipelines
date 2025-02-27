@@ -3,6 +3,9 @@ on:
   schedule:
     # Run a main hourly job
     - cron: "27 * * * *"
+  push:
+    branches:
+      - 'set_up_slack_github_actions_failure_alerts_ba'
   # Also allow for manual triggers
   workflow_dispatch:
 
@@ -46,28 +49,22 @@ jobs:
           poetry run dbt deps --project-dir transform --target prd
           poetry run dbt build --project-dir transform --target prd
           poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd
-      - name: Failure notification
-      on:
-        push:
-          branches: [ "set_up_slack_github_actions_failure_alerts_ba" ]
-
-      jobs:
-        failing-job:
-          runs-on: ubuntu-latest
-          steps:
-          - name: failing step
-            run: exit 1
-        on-failure:
-          runs-on: ubuntu-latest
-          if: ${{ always() && (needs.failing-job.result == 'failure' || needs.failing-job.result == 'timed_out') }}
-          needs:
-            - failing-job
-          steps:
-          - uses: actions/checkout@v2
-          - name: Slack Notification
-            uses: rtCamp/action-slack-notify@v2
-            env:
-              SLACK_USERNAME: Leo
-              SLACK_TITLE: Workflow ${{ needs.failing-job.result }}
-              MSG_MINIMAL: actions url
-              SLACK_WEBHOOK: ${{ secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}
+      - name: failure testing
+        if: github.ref == 'refs/heads/set_up_slack_github_actions_failure_alerts_ba'
+        run: exit 1 
+  slack-notification:
+    runs-on: ubuntu-latest
+    needs: pipeline
+    if: ${{ failure() || cancelled() }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_USERNAME: cagov Slackbot
+          SLACK_TITLE: DDRC automated Snowflake data pipeline failure @Ian @Summer Mothwood @Brittany Allen
+          SLACK_MESSAGE: |
+            The hourly DDRC automated Snowflake data pipeline has failed. 
+            Data will not be updated in Azure until this is resolved: ${{ github.event.workflow_run.html_url }}
+          MSG_MINIMAL: actions url
+          SLACK_WEBHOOK: ${{ secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}

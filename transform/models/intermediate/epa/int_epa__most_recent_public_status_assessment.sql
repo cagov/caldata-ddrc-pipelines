@@ -4,22 +4,15 @@ with psa as (
 
 ),
 
-most_recent_date as (
-    select MAX(load_date) as max_date
-    from psa
-),
-
 most_recent_psa_data as (
 
     select
-        psa.public_status,
-        psa.land_use,
-        psa.fire_name,
-        psa.last_updated
-
+        public_status,
+        land_use,
+        fire_name,
+        last_updated
     from psa
-    inner join most_recent_date as md on psa.load_date = md.max_date
-
+    where load_date = (select max(load_date) from psa)
 )
 
 select * from most_recent_psa_data

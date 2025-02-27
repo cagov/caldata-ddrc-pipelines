@@ -1,9 +1,3 @@
-{{
-  config(
-    materialized = "table"
-  )
-}}
-
 with epa_count_phase1_complete as (
     select
         'cleanup_phase1_complete' as metric_name,
@@ -56,6 +50,9 @@ airtable_metrics as (
         metric_name not in (select metric_name from pipeline_metrics)
 ),
 
+-- Note: deliberately not casting last_updated timestamp_tz in this model.
+-- It's enforced by the contract, and if anything *not* a UTC timestamp sneaks in,
+-- the union should fail
 ddrc_metrics as (
     select * from pipeline_metrics
     union all
@@ -68,5 +65,5 @@ select
     metric_type,
     metric_unit_label,
     update_frequency,
-    convert_timezone('UTC', 'UTC', last_updated)::timestamp_tz as last_updated
+    last_updated
 from ddrc_metrics

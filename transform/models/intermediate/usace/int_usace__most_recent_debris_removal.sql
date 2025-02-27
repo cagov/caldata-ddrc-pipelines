@@ -14,7 +14,7 @@ most_recent_pdr_data as (
         roe_submitted,
         hsa_status,
         pcr_status,
-        fso_pkg_returned,
+        fso_pkg_approved,
         object_id,
         _load_date,
         convert_timezone('UTC', last_updated) as last_updated

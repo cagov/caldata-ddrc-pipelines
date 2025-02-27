@@ -35,7 +35,7 @@ fso_return as (
         count(distinct object_id) as metric_value,
         last_updated
     from usace
-    where fso_pkg_returned is not null
+    where fso_pkg_approved is not null
     group by all
 ),
 

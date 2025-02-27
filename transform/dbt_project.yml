@@ -35,14 +35,14 @@ models:
       epa:
         +schema: epa
       usace:
-        +schema: usage
+        +schema: usace
 
     intermediate:
       +materialized: view
       epa:
         +schema: epa
       usace:
-        +schema: usage
+        +schema: usace
 
     marts:
       +materialized: table
@@ -54,4 +54,4 @@ models:
       summary:
         +schema: summary
       usace:
-        +schema: usage
+        +schema: usace

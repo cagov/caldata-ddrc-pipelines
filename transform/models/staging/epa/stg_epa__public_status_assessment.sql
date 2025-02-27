@@ -12,7 +12,7 @@ with psa as (
         "PublicStatus" as public_status,
         "Shape__Area" as shape_area,
         "Shape__Length" as shape_length,
-        TO_TIMESTAMP("_LAST_EDIT_DATE", 3) as last_updated,
+        TO_TIMESTAMP_TZ("_LAST_EDIT_DATE", 3) as last_updated,
         "_LOAD_DATE" as load_date,
         "geometry" as geometry
 

@@ -47,27 +47,27 @@ jobs:
           poetry run dbt build --project-dir transform --target prd
           poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd
       - name: Failure notification
-          on:
-            push:
-              branches: [ "set_up_slack_github_actions_failure_alerts_ba" ]
+      on:
+        push:
+          branches: [ "set_up_slack_github_actions_failure_alerts_ba" ]
 
-          jobs:
-            failing-job:
-              runs-on: ubuntu-latest
-              steps:
-              - name: failing step
-                run: exit 1
-            on-failure:
-              runs-on: ubuntu-latest
-              if: ${{ always() && (needs.failing-job.result == 'failure' || needs.failing-job.result == 'timed_out') }}
-              needs:
-                - failing-job
-              steps:
-              - uses: actions/checkout@v2
-              - name: Slack Notification
-                uses: rtCamp/action-slack-notify@v2
-                env:
-                  SLACK_USERNAME: Leo
-                  SLACK_TITLE: Workflow ${{ needs.failing-job.result }}
-                  MSG_MINIMAL: actions url
-                  SLACK_WEBHOOK: ${{ secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}
+      jobs:
+        failing-job:
+          runs-on: ubuntu-latest
+          steps:
+          - name: failing step
+            run: exit 1
+        on-failure:
+          runs-on: ubuntu-latest
+          if: ${{ always() && (needs.failing-job.result == 'failure' || needs.failing-job.result == 'timed_out') }}
+          needs:
+            - failing-job
+          steps:
+          - uses: actions/checkout@v2
+          - name: Slack Notification
+            uses: rtCamp/action-slack-notify@v2
+            env:
+              SLACK_USERNAME: Leo
+              SLACK_TITLE: Workflow ${{ needs.failing-job.result }}
+              MSG_MINIMAL: actions url
+              SLACK_WEBHOOK: ${{ secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}

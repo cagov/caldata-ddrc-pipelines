@@ -17,7 +17,7 @@ most_recent_pdr_data as (
         fso_pkg_returned,
         object_id,
         _load_date,
-        last_updated
+        convert_timezone('UTC', last_updated) as last_updated
 
     from pdr
     where last_updated = (select max(last_updated) from pdr)

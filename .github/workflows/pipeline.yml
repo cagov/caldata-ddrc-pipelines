@@ -3,9 +3,6 @@ on:
   schedule:
     # Run a main hourly job
     - cron: "27 * * * *"
-  push:
-    branches:
-      - 'set_up_slack_github_actions_failure_alerts_ba'
   # Also allow for manual triggers
   workflow_dispatch:
 
@@ -49,9 +46,6 @@ jobs:
           poetry run dbt deps --project-dir transform --target prd
           poetry run dbt build --project-dir transform --target prd
           poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd
-      - name: failure testing
-        if: github.ref == 'refs/heads/set_up_slack_github_actions_failure_alerts_ba'
-        run: exit 1 
   slack-notification:
     runs-on: ubuntu-latest
     needs: pipeline
@@ -62,10 +56,10 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_USERNAME: cagov Slackbot
-          SLACK_TITLE: DDRC automated Snowflake data pipeline failure! ⚠️
+          SLACK_TITLE: ⚠️ DDRC pipeline error! ⚠️
           SLACK_MESSAGE: |
             <@U04B65518U8> <@U07NQ5RKY1J> <@U014BKF82KH>
-            The hourly DDRC automated Snowflake data pipeline has failed. 
+            The hourly DDRC automated Snowflake data pipeline has an issue. 
             Data will not be updated in Azure until this is resolved. 
             ${{ github.event.workflow_run.html_url }}
           MSG_MINIMAL: actions url

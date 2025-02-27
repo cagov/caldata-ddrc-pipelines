@@ -68,5 +68,5 @@ select
     metric_type,
     metric_unit_label,
     update_frequency,
-    last_updated
+    convert_timezone('UTC', 'UTC', last_updated)::timestamp_tz as last_updated
 from ddrc_metrics

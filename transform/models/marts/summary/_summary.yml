@@ -58,7 +58,7 @@ models:
                 ]
       - name: last_updated
         description: Most recent update timestamp
-        data_type: timestamp
+        data_type: timestamp_tz
         constraints:
           - type: not_null
         data_tests:

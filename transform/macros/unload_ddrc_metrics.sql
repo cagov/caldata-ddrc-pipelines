@@ -8,6 +8,8 @@
   {% set tbl = ref('ddrc_metrics_summary') %}
   {% set url = stage ~ '/' ~ file_key %}
   {% set query %}
+      alter session set timestamp_output_format = 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM';
+      alter session set timezone = 'UTC';
       copy into {{ url }}
       from (
         select array_agg(object_construct(*)) from {{ tbl }}

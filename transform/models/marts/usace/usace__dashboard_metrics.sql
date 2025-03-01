@@ -27,7 +27,7 @@ in_queue as (
     group by all
 
 ),
-
+/* removing this metric per Jason's request 2/28
 fso_return as (
     select
         'phase2_parcels_completed' as metric_name,
@@ -39,13 +39,15 @@ fso_return as (
     group by all
 ),
 
+*/
+
 usace_dashboard_metrics as (
 
     select * from roe_status
     union all
     select * from in_queue
-    union all
-    select * from fso_return
+-- union all
+-- select * from fso_return
 
 )
 

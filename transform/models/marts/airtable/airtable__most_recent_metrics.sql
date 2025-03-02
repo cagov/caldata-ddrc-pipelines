@@ -13,12 +13,21 @@ max_modified as (
         to_number(metric, 38, 2) as metric,
         metric_type,
         metric_unit_label,
-        update_frequency,
+        lower(update_frequency) as update_frequency,
         date_created,
         max(date_created)
             over (partition by metric_name) as last_updated
     from air
 )
 
-select * from max_modified
+select
+    metric_machine_name,
+    to_number(sum(metric), 38, 2) as metric,
+    metric_type,
+    metric_unit_label,
+    update_frequency,
+    date_created,
+    last_updated
+from max_modified
 where date_created = last_updated
+group by all

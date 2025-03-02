@@ -46,15 +46,15 @@ models:
           - type: not_null
         data_tests:
           - not_null
-          - accepted_values: # is this test overkill?
+          - accepted_values:
               values:
                 [
-                  "As needed",
-                  "Daily",
-                  "Weekly",
-                  "Monthly",
-                  "Completed",
-                  "Content Update",
+                  "as needed",
+                  "daily",
+                  "weekly",
+                  "monthly",
+                  "completed",
+                  "content update",
                 ]
       - name: last_updated
         description: Most recent update timestamp

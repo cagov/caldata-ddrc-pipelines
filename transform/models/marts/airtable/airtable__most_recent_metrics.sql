@@ -22,7 +22,7 @@ max_modified as (
 
 select
     metric_machine_name,
-    to_number(sum(metric), 38, 2) as metric,
+    metric,
     metric_type,
     metric_unit_label,
     update_frequency,

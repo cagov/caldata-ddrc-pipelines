@@ -4,7 +4,7 @@ with epa_count_phase1_complete as (
         sum(public_status_count) as metric_value,
         'count' as metric_type,
         'cleanups completed' as metric_unit_label,
-        'Daily' as update_frequency, --acceptable values for this field are 'As needed', 'Daily', 'Weekly', or 'Monthly'
+        'daily' as update_frequency, --acceptable values for this field are 'As needed', 'Daily', 'Weekly', or 'Monthly'
         max(last_updated) as last_updated
     from {{ ref('public_status_by_land_use_and_fire_name_counted') }}
     where
@@ -18,7 +18,7 @@ usace_parcel_debris_metrics as (
         metric_value,
         'count' as metric_type,
         metric_unit_label,
-        'Daily' as update_frequency,
+        'daily' as update_frequency,
         last_updated
     from {{ ref('usace__dashboard_metrics') }}
 ),

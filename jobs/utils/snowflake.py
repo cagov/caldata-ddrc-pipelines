@@ -141,6 +141,7 @@ def gdf_to_snowflake(
 
     """
     import geopandas.array
+    import pandas
     import shapely.ops
     from snowflake.connector.pandas_tools import write_pandas
 
@@ -167,7 +168,11 @@ def gdf_to_snowflake(
             **{
                 name: gdf[name]
                 .make_valid()
-                .apply(lambda s: shapely.ops.orient(s, 1) if not s.is_empty else s)
+                .apply(
+                    lambda s: shapely.ops.orient(s, 1)
+                    if (pandas.notna(s) and not s.is_empty)
+                    else s
+                )
                 for name, dtype in gdf.dtypes.items()
                 if isinstance(dtype, geopandas.array.GeometryDtype)
             }

@@ -49,11 +49,6 @@ jobs:
       - name: failure testing
         if: github.ref == 'refs/heads/limit_slackbot_notifications'
         run: exit 1 
-  slack-bot-script:
-    steps:
-      - checkout
-      - run:
-          command: bash slack_bot_script.sh
   slack-notification:
     runs-on: ubuntu-latest
     needs: pipeline
@@ -72,3 +67,11 @@ jobs:
             ${{ github.event.workflow_run.html_url }}
           MSG_MINIMAL: actions url
           SLACK_WEBHOOK: ${{ secrets.DDRC_SLACK_WEBHOOK_URL }}
+  slack-bot-script:
+    needs: slack-notification
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run script
+        run: bash slack_bot_script.sh

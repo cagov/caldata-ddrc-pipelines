@@ -3,6 +3,9 @@ on:
   schedule:
     # Run a main hourly job
     - cron: "27 * * * *"
+  push:
+    branches:
+      - 'limit_slackbot_notifications'
   # Also allow for manual triggers
   workflow_dispatch:
 
@@ -34,18 +37,9 @@ jobs:
           SNOWFLAKE_WAREHOUSE: LOADING_XS_DDRC_PRD
         run: |
           poetry run python -m jobs.load_agol_sources
-      - name: Build dbt project
-        env:
-          DBT_PROFILES_DIR: transform/ci
-          DBT_ANALYTICS_DB: ANALYTICS_DDRC_PRD
-          DBT_RAW_DB: RAW_DDRC_PRD
-          SNOWFLAKE_ROLE: TRANSFORMER_DDRC_PRD
-          SNOWFLAKE_DATABASE: TRANSFORM_DDRC_PRD
-          SNOWFLAKE_WAREHOUSE: TRANSFORMING_XS_DDRC_PRD
-        run: |
-          poetry run dbt deps --project-dir transform --target prd
-          poetry run dbt build --project-dir transform --target prd
-          poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd
+      - name: failure testing
+        if: github.ref == 'refs/heads/limit_slackbot_notifications'
+        run: exit 1 
   slack-notification:
     runs-on: ubuntu-latest
     needs: pipeline
@@ -63,4 +57,13 @@ jobs:
             Data will not be updated in Azure until this is resolved.
             ${{ github.event.workflow_run.html_url }}
           MSG_MINIMAL: actions url
-          SLACK_WEBHOOK: ${{ secrets.DDRC_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK: ${{ secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}
+  slack-bot-script:
+    runs-on: ubuntu-latest
+    needs: slack-notification
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make executable
+        run: chmod +x slack_bot_script.sh
+      - name: Run script
+        run: bash slack_bot_script.sh

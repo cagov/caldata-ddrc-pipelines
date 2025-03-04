@@ -63,5 +63,7 @@ jobs:
     needs: slack-notification
     steps:
       - uses: actions/checkout@v4
+      - name: Make executable
+        run: chmod +x slack_bot_script.sh
       - name: Run script
         run: bash slack_bot_script.sh

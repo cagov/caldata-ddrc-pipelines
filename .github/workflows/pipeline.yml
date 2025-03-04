@@ -57,7 +57,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
-        if: [[ $(gh run list -w pipeline -L 1 -b main -q '.[0].status' --json status) == 'completed' ]]; then echo "Success"; fi;
+        if [[ $(gh run list -w pipeline -L 1 -b main -q '.[0].status' --json status) == 'completed' ]]; then echo "Success"; fi;
         env:
           SLACK_USERNAME: cagov Slackbot
           SLACK_TITLE: ⚠️ DDRC pipeline error! ⚠️

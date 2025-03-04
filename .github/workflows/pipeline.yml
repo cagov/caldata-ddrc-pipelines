@@ -70,8 +70,5 @@ jobs:
   slack-bot-script:
     needs: slack-notification
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Run script
         run: bash slack_bot_script.sh

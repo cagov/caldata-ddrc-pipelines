@@ -57,7 +57,7 @@ jobs:
             Data will not be updated in Azure until this is resolved.
             ${{ github.event.workflow_run.html_url }}
           MSG_MINIMAL: actions url
-          SLACK_WEBHOOK: ${{ secrets.DDRC_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK: ${{ secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}
   slack-bot-script:
     runs-on: ubuntu-latest
     needs: slack-notification

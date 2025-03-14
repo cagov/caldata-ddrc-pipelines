@@ -1,0 +1,51 @@
+name: nb_testing_pipeline
+on:
+  #schedule:
+    # Run a main hourly job
+    #- cron: "27 * * * *"
+  # Also allow for manual triggers
+  workflow_dispatch:
+
+# env:
+#   SNOWFLAKE_PRIVATE_KEY: {{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
+#   SNOWFLAKE_USER: {{ SECRETS.SNOWFLAKE_USER_PRD }}
+#   SNOWFLAKE_ACCOUNT: {{ SECRETS.SNOWFLAKE_ACCOUNT }}
+jobs:
+    job1:
+        run: |
+        echo "branch name=${{ github.head_ref || github.ref_name }}"
+# jobs:
+#   pipeline:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/setup-python@v4
+#         with:
+#           python-version: "3.10"
+#       - uses: actions/cache@v4
+#         with:
+#           key: {{ github.ref }}
+#           path: .cache
+#       - uses: snok/install-poetry@v1
+#       - name: Install dependencies
+#         run: |
+#           poetry install
+#       - name: Load data
+#         env:
+#           SNOWFLAKE_ROLE: LOADER_DDRC_PRD
+#           SNOWFLAKE_DATABASE: RAW_DDRC_PRD
+#           SNOWFLAKE_WAREHOUSE: LOADING_XS_DDRC_PRD
+#         run: |
+#           poetry run python -m jobs.load_agol_sources
+#       - name: Build dbt project
+#         env:
+#           DBT_PROFILES_DIR: transform/ci
+#           DBT_ANALYTICS_DB: ANALYTICS_DDRC_PRD
+#           DBT_RAW_DB: RAW_DDRC_PRD
+#           SNOWFLAKE_ROLE: TRANSFORMER_DDRC_PRD
+#           SNOWFLAKE_DATABASE: TRANSFORM_DDRC_PRD
+#           SNOWFLAKE_WAREHOUSE: TRANSFORMING_XS_DDRC_PRD
+#         run: |
+#           poetry run dbt deps --project-dir transform --target prd
+#           poetry run dbt build --project-dir transform --target prd
+#           poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd

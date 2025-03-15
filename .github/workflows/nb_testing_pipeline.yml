@@ -9,16 +9,37 @@ on:
   # Also allow for manual triggers
   workflow_dispatch:
 
-# env:
-#   SNOWFLAKE_PRIVATE_KEY: {{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
-#   SNOWFLAKE_USER: {{ SECRETS.SNOWFLAKE_USER_PRD }}
-#   SNOWFLAKE_ACCOUNT: {{ SECRETS.SNOWFLAKE_ACCOUNT }}
+#env:
+#  SNOWFLAKE_PRIVATE_KEY: {{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
+#  SNOWFLAKE_USER: {{ SECRETS.SNOWFLAKE_USER_PRD }}
+#  SNOWFLAKE_ACCOUNT: {{ SECRETS.SNOWFLAKE_ACCOUNT }}
+env:
+  VAR1: 'workflow env value'
+  CONTROLVAR: true
+  
 jobs:
     job1:
       runs-on: ubuntu-latest
+      if: controlvar
+      env: 
+        VAR1: 'job1 env value'
       steps:
-        - name: output_get_branch_name
-          run: echo "branch name=${{github.ref_name }}"
+        - name: job1-step1
+          if: $CONTROLVAR
+          env:
+            VAR1: 'job1 step 1 value'
+          run: echo "job1-step1 ECHOED THIS $VAR1"
+          
+        - name: job1-step2
+          if: $CONTROLVAR
+          run: echo "JOB1-STEP2 ECHOED THIS $VAR1"
+    job2:
+      runs-on: ubuntu-latest
+      steps:
+        - name: job2-step2
+          if: $CONTROLVAR
+          run: echo "job2-step2 echoed this $VAR1"
+        
         
 # jobs:
 #   pipeline:

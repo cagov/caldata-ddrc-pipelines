@@ -20,7 +20,7 @@ env:
 jobs:
     job1:
       runs-on: ubuntu-latest
-      if: controlvar
+      if: $CONTROLVAR
       env: 
         VAR1: 'job1 env value'
       steps:

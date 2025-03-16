@@ -41,7 +41,7 @@ jobs:
       steps:
         - name: job2-step2
           if: github.ref_name !='main'
-          run: echo "job2-step2 echoed this $VAR1"
+          run: echo "job2-step2 echoed this $VAR2"
         
         
 # jobs:

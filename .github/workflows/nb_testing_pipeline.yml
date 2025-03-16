@@ -15,7 +15,7 @@ on:
 #  SNOWFLAKE_ACCOUNT: {{ SECRETS.SNOWFLAKE_ACCOUNT }}
 env:
   VAR1: 'workflow env value'
-  VAR2: ${{ github.ref_name !='main' && 'not_main' || 'it_is_main' }}
+  VAR2: ${{ github.ref_name =='main' && 'not_main' || 'it_is_main' }}
   
 jobs:
     job1:

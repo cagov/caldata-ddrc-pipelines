@@ -15,29 +15,32 @@ on:
 #  SNOWFLAKE_ACCOUNT: {{ SECRETS.SNOWFLAKE_ACCOUNT }}
 env:
   VAR1: 'workflow env value'
-  CONTROLVAR: true
+  
   
 jobs:
     job1:
       runs-on: ubuntu-latest
-      if: $CONTROLVAR
+      if: ! ${{github.ref_name =='main'}}
       env: 
-        VAR1: 'job1 env value'
+        VAR1: 'initial job1 env value'
       steps:
+        - name: step0
+          run: echo " step 0, var1==$VAR1"
+          
         - name: job1-step1
-          if: $CONTROLVAR
+          if: ! ${{github.ref_name =='main'}}
           env:
             VAR1: 'job1 step 1 value'
           run: echo "job1-step1 ECHOED THIS $VAR1"
           
         - name: job1-step2
-          if: $CONTROLVAR
+          if: ! ${{github.ref_name =='main'}}
           run: echo "JOB1-STEP2 ECHOED THIS $VAR1"
     job2:
       runs-on: ubuntu-latest
       steps:
         - name: job2-step2
-          if: $CONTROLVAR
+          if: ! ${{github.ref_name =='main'}}
           run: echo "job2-step2 echoed this $VAR1"
         
         

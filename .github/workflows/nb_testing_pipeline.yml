@@ -19,7 +19,7 @@ env:
 jobs:
     job1:
       runs-on: ubuntu-latest
-      if: github.ref_name !='main'
+      if: github.ref_name =='main'
       env: 
         VAR1: 'initial job1 env value'
       steps:
@@ -30,7 +30,7 @@ jobs:
           if: github.ref_name !='main'
           env:
             VAR1: 'job1 step 1 value'
-          run: echo "job1-step1 ECHOED THIS $VAR1"
+          run: echo "job1-step1, var1==$VAR1"
           
         - name: job1-step2
           if: github.ref_name !='main'

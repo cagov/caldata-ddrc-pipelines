@@ -15,18 +15,18 @@ on:
 #  SNOWFLAKE_ACCOUNT: {{ SECRETS.SNOWFLAKE_ACCOUNT }}
 env:
   VAR1: 'workflow env value'
-  
+  branch_name: ${{github.ref_name}}
   
 jobs:
     job1:
       runs-on: ubuntu-latest
-      if: ! ${{github.ref_name =='main'}}
+      if: ${{ env.branch_name =='main' }}
       env: 
         VAR1: 'initial job1 env value'
       steps:
         - name: step0
           run: echo " step 0, var1==$VAR1"
-          
+
         - name: job1-step1
           if: ! ${{github.ref_name =='main'}}
           env:

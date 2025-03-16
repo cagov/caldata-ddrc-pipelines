@@ -20,7 +20,7 @@ env:
 jobs:
     job1:
       runs-on: ubuntu-latest
-      if: ${{ env.branch_name =='main' }}
+      if: ${{ branch_name =='main' }}
       env: 
         VAR1: 'initial job1 env value'
       steps:

@@ -10,12 +10,12 @@ on:
   workflow_dispatch:
 
 #env:
-#  SNOWFLAKE_PRIVATE_KEY: {{ SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD }}
-#  SNOWFLAKE_USER: {{ SECRETS.SNOWFLAKE_USER_PRD }}
-#  SNOWFLAKE_ACCOUNT: {{ SECRETS.SNOWFLAKE_ACCOUNT }}
+#  SNOWFLAKE_PRIVATE_KEY: ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD || SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
+#  SNOWFLAKE_USER: ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_USER_PRD || SECRETS.SNOWFLAKE_USER_DEV }}
+#  SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 env:
   VAR1: 'workflow env value'
-  VAR2: ${{ github.ref_name =='main' && 'not_main' || 'it_is_main' }}
+  VAR2: asdfasdf
   
 jobs:
     job1:
@@ -41,7 +41,9 @@ jobs:
       steps:
         - name: job2-step2
           if: github.ref_name !='main'
-          run: echo "job2-step2 echoed this $VAR2"
+          env:
+            COMMAND: ${{ github.ref_name !='main' && 'echo true' || 'echo false' }}
+          run: $COMMAND
         
         
 # jobs:

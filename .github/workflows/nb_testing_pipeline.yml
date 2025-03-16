@@ -16,6 +16,7 @@ on:
 env:
   VAR1: 'workflow env value'
   VAR2: asdfasdf
+  DEBUG: ${{ github.ref_name == 'main' && true || false }}
   
 jobs:
     job1:
@@ -40,10 +41,16 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: job2-step2
-          if: github.ref_name !='main'
           env:
-            COMMAND: ${{ github.ref_name !='main' && 'echo true' || 'echo false' }}
-          run: $COMMAND
+            COMMAND1: ${{ github.ref_name !='main' && 'echo true1' || 'echo false1' }}
+            COMMAND2: ${{ github.ref_name !='main' && 'echo true2' || 'echo false2' }}
+            COMMAND3: ${{ github.ref_name !='main' && 'echo true3' || 'echo false3' }}
+            
+          run: |
+            $COMMAND1
+            $COMMAND2
+            $COMMAND3
+
         
         
 # jobs:

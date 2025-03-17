@@ -41,15 +41,12 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: job2-step2
+          
           env:
-            COMMAND1: ${{ github.ref_name !='main' && 'echo true1' || 'echo false1' }}
-            COMMAND2: ${{ github.ref_name !='main' && 'echo true2' || 'echo false2' }}
-            COMMAND3: ${{ github.ref_name !='main' && 'echo true3' || 'echo false3' }}
+            COMMAND1: ${{ false && true || false }}
             
-          run: |
-            $COMMAND1
-            $COMMAND2
-            $COMMAND3
+          run: $COMMAND1
+            
 
         
         

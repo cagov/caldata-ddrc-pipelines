@@ -45,7 +45,7 @@ jobs:
           env:
             COMMAND1: ${{ false && true || false }}
             
-          run: $COMMAND1
+          run: echo $COMMAND1
             
 
         

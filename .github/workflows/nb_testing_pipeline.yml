@@ -43,7 +43,7 @@ jobs:
         - name: job2-step2
           
           env:
-            COMMAND1: ${{ false && true || false }}
+            COMMAND1: ${{ false && (true || false) }}
             
           run: echo $COMMAND1
             

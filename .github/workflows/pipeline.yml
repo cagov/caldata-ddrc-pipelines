@@ -1,8 +1,5 @@
 name: pipeline
 on:
-  push:
-    branches:
-      - '**'
   schedule:
     # Run a main hourly job
     - cron: "27 * * * *"

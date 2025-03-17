@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 env:
-  SNOWFLAKE_PRIVATE_KEY:  ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD || SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
-  SNOWFLAKE_USER:         ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_USER_PRD        || SECRETS.SNOWFLAKE_USER_DEV }}
-  SNOWFLAKE_ACCOUNT:      ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_PRIVATE_KEY: ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD || SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
+  SNOWFLAKE_USER: ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_USER_PRD || SECRETS.SNOWFLAKE_USER_DEV }}
+  SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 
 jobs:
   pipeline:
@@ -29,23 +29,34 @@ jobs:
           poetry install
       - name: Load data
         env:
-          SNOWFLAKE_ROLE:       ${{ github.ref_name =='main' && 'LOADER_DDRC_PRD'      || 'LOADER_DDRC_DEV' }}
-          SNOWFLAKE_DATABASE:   ${{ github.ref_name =='main' && 'RAW_DDRC_PRD'         || 'RAW_DDRC_DEV' }}
-          SNOWFLAKE_WAREHOUSE:  ${{ github.ref_name =='main' && 'LOADING_XS_DDRC_PRD'  || 'LOADING_XS_DDRC_DEV' }}
+          SNOWFLAKE_ROLE: ${{ github.ref_name =='main' && 'LOADER_DDRC_PRD' || 'LOADER_DDRC_DEV' }}
+          SNOWFLAKE_DATABASE: ${{ github.ref_name =='main' && 'RAW_DDRC_PRD' || 'RAW_DDRC_DEV' }}
+          SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'LOADING_XS_DDRC_PRD' || 'LOADING_XS_DDRC_DEV' }}
         run: |
           poetry run python -m jobs.load_agol_sources
       - name: Build dbt project
         env:
           DBT_PROFILES_DIR: transform/ci
-          DBT_ANALYTICS_DB:   ${{ github.ref_name =='main'  && 'ANALYTICS_DDRC_PRD'         || 'ANALYTICS_DDRC_DEV' }}
-          DBT_RAW_DB:         ${{ github.ref_name =='main'  && 'RAW_DDRC_PRD'               || 'RAW_DDRC_DEV' }}
-          SNOWFLAKE_ROLE:     ${{ github.ref_name =='main'  && 'TRANSFORMER_DDRC_PRD'       || 'TRANSFORMER_DDRC_DEV' }}
-          SNOWFLAKE_DATABASE: ${{ github.ref_name =='main'  && 'TRANSFORM_DDRC_PRD'         || 'TRANSFORM_DDRC_DEV' }}
-          SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD'   || 'TRANSFORMING_XS_DDRC_DEV' }}
+          DBT_ANALYTICS_DB: ${{ github.ref_name =='main'  && 'ANALYTICS_DDRC_PRD' || 'ANALYTICS_DDRC_DEV' }}
+          DBT_RAW_DB: ${{ github.ref_name =='main'  && 'RAW_DDRC_PRD' || 'RAW_DDRC_DEV' }}
+          SNOWFLAKE_ROLE: ${{ github.ref_name =='main'  && 'TRANSFORMER_DDRC_PRD' || 'TRANSFORMER_DDRC_DEV' }}
+          SNOWFLAKE_DATABASE: ${{ github.ref_name =='main'  && 'TRANSFORM_DDRC_PRD' || 'TRANSFORM_DDRC_DEV' }}
+          SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD' || 'TRANSFORMING_XS_DDRC_DEV' }}
 
-          COMMAND1: ${{ github.ref_name =='main' && 'poetry run dbt deps --project-dir transform --target prd'  || 'poetry run dbt deps --project-dir transform --target dev' }}
-          COMMAND2: ${{ github.ref_name =='main' && 'poetry run dbt build --project-dir transform --target prd' || 'poetry run dbt build --project-dir transform --target dev' }}
-          COMMAND3: ${{ github.ref_name =='main' && 'poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd' || 'poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target dev' }}
+          COMMAND1: |
+            ${{ github.ref_name =='main' && 
+            'poetry run dbt deps --project-dir transform --target prd' || 
+            'poetry run dbt deps --project-dir transform --target dev' }}
+            
+          COMMAND2: |
+            ${{ github.ref_name =='main' && 
+            'poetry run dbt build --project-dir transform --target prd' || 
+            'poetry run dbt build --project-dir transform --target dev' }}
+            
+          COMMAND3: |
+            ${{ github.ref_name =='main' && 
+            'poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd' || 
+            'poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target dev' }}
         run: |
           $COMMAND1
           $COMMAND2

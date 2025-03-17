@@ -43,29 +43,17 @@ jobs:
           SNOWFLAKE_DATABASE: ${{ github.ref_name =='main'  && 'TRANSFORM_DDRC_PRD' || 'TRANSFORM_DDRC_DEV' }}
           SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD' || 'TRANSFORMING_XS_DDRC_DEV' }}
 
-          COMMAND1: |
-            ${{ github.ref_name =='main' && 
-            'poetry run dbt deps --project-dir transform --target prd' || 
-            'poetry run dbt deps --project-dir transform --target dev' }}
+          TARGET_ENV: ${{ github.ref_name =='main' && 'prd' || 'dev' }}
             
-          COMMAND2: |
-            ${{ github.ref_name =='main' && 
-            'poetry run dbt build --project-dir transform --target prd' || 
-            'poetry run dbt build --project-dir transform --target dev' }}
-            
-          COMMAND3: |
-            ${{ github.ref_name =='main' && 
-            'poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target prd' || 
-            'poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target dev' }}
         run: |
-          $COMMAND1
-          $COMMAND2
-          $COMMAND3
+          poetry run dbt deps --project-dir transform --target $TARGET_ENV
+          poetry run dbt build --project-dir transform --target $TARGET_ENV
+          poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target $TARGET_ENV
 
   slack-notification:
     runs-on: ubuntu-latest
     needs: pipeline
-    if: ${{ github.ref_name =='main' && ( failure() || cancelled() ) }}
+    if: ${{  failure() || cancelled()  }}
     steps:
       - uses: actions/checkout@v4
       - name: Slack Notification
@@ -79,4 +67,4 @@ jobs:
             Data will not be updated in Azure until this is resolved.
             ${{ github.event.workflow_run.html_url }}
           MSG_MINIMAL: actions url
-          SLACK_WEBHOOK: ${{ secrets.DDRC_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK: ${{ github.ref_name =='main' && 'secrets.DDRC_SLACK_WEBHOOK_URL' || 'secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL' }}

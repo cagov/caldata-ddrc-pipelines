@@ -42,7 +42,8 @@ jobs:
           DBT_RAW_DB: ${{ github.ref_name =='main'  && 'RAW_DDRC_PRD' || 'RAW_DDRC_DEV' }}
           SNOWFLAKE_ROLE: ${{ github.ref_name =='main'  && 'TRANSFORMER_DDRC_PRD' || 'TRANSFORMER_DDRC_DEV' }}
           SNOWFLAKE_DATABASE: ${{ github.ref_name =='main'  && 'TRANSFORM_DDRC_PRD' || 'TRANSFORM_DDRC_DEV' }}
-          SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD' || 'TRANSFORMING_XS_DDRC_DEV' }}
+          SNOWFLAKE_WAREHOUSE: |
+            ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD' || 'TRANSFORMING_XS_DDRC_DEV' }}
           TARGET_ENV: ${{ github.ref_name =='main' && 'prd' || 'dev' }}
         run: |
           poetry run dbt deps --project-dir transform --target $TARGET_ENV

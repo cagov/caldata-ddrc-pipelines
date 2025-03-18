@@ -47,7 +47,7 @@ jobs:
 
           TARGET_ENV: ${{ github.ref_name =='main' && 'prd' || 'dev' }}
         run: |
-          echo 'debugging line, this is the snowflake role selected:--->$SNOWFLAKE_WAREHOUSE<----'
+          echo "debugging line, this is the snowflake role selected: $SNOWFLAKE_WAREHOUSE "
           poetry run dbt deps --project-dir transform --target $TARGET_ENV
           poetry run dbt build --project-dir transform --target $TARGET_ENV
           poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target $TARGET_ENV

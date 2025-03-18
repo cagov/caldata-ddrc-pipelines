@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  SNOWFLAKE_PRIVATE_KEY: ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD || SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
+  SNOWFLAKE_PRIVATE_KEY: |
+    ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_PRIVATE_KEY_PRD || SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
   SNOWFLAKE_USER: ${{ github.ref_name =='main' && SECRETS.SNOWFLAKE_USER_PRD || SECRETS.SNOWFLAKE_USER_DEV }}
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
 
@@ -41,10 +42,10 @@ jobs:
           DBT_RAW_DB: ${{ github.ref_name =='main'  && 'RAW_DDRC_PRD' || 'RAW_DDRC_DEV' }}
           SNOWFLAKE_ROLE: ${{ github.ref_name =='main'  && 'TRANSFORMER_DDRC_PRD' || 'TRANSFORMER_DDRC_DEV' }}
           SNOWFLAKE_DATABASE: ${{ github.ref_name =='main'  && 'TRANSFORM_DDRC_PRD' || 'TRANSFORM_DDRC_DEV' }}
-          SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD' || 'TRANSFORMING_XS_DDRC_DEV' }}
+          SNOWFLAKE_WAREHOUSE: |
+            ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD' || 'TRANSFORMING_XS_DDRC_DEV' }}
 
           TARGET_ENV: ${{ github.ref_name =='main' && 'prd' || 'dev' }}
-            
         run: |
           poetry run dbt deps --project-dir transform --target $TARGET_ENV
           poetry run dbt build --project-dir transform --target $TARGET_ENV
@@ -67,4 +68,7 @@ jobs:
             Data will not be updated in Azure until this is resolved.
             ${{ github.event.workflow_run.html_url }}
           MSG_MINIMAL: actions url
-          SLACK_WEBHOOK: ${{ github.ref_name =='main' && secrets.DDRC_SLACK_WEBHOOK_URL || secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK: >
+            ${{ github.ref_name =='main' &&
+            secrets.DDRC_SLACK_WEBHOOK_URL ||
+            secrets.CALDATA_DATASERVICES_BOT_NOTIFICATIONS_SLACK_WEBHOOK_URL }}

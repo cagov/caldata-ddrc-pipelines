@@ -34,8 +34,7 @@ pipeline_metrics as (
 ),
 
 --The Airtable captures all metrics, including those
---entered manually,
---we will use it to add in any of the metrics
+--entered manually, we will use it to add in any of the metrics
 --that we do not have automated pipelines for yet:
 airtable_metrics as (
     select
@@ -47,7 +46,8 @@ airtable_metrics as (
         last_updated
     from {{ ref('airtable__most_recent_metrics') }}
     where
-        metric_name not in (select metric_name from pipeline_metrics)
+        metric_name not in (select metric_name from pipeline_metrics) -- this line ensures we are always
+        --prioritizing a metric coming from one of our API pipelines, if it also exists in airtable
 ),
 
 -- Note: deliberately not casting last_updated timestamp_tz in this model.

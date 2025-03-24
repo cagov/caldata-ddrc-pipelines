@@ -22,7 +22,7 @@ datasets: list[dict[str, Any]] = [
         "schema": "EPA_AGOL_ASSESSMENT",
         "name": "PUBLIC_STATUS_ASSESSMENT",
         "url": (
-            "https://services.arcgis.com.asdfasdf/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
+            "https://XXXXXservices.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
             "SoCalFires2025_PublicStatusNightly/FeatureServer/0"
         ),
         "merge_on": ["OBJECTID", "_LOAD_DATE"],

@@ -36,6 +36,7 @@ jobs:
         run: |
           poetry run python -m jobs.load_agol_sources
       - name: Build dbt project
+        if: ${{ ! cancelled() }}
         env:
           DBT_PROFILES_DIR: transform/ci
           DBT_ANALYTICS_DB: ${{ github.ref_name =='main'  && 'ANALYTICS_DDRC_PRD' || 'ANALYTICS_DDRC_DEV' }}

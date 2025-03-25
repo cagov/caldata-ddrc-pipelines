@@ -22,7 +22,7 @@ datasets: list[dict[str, Any]] = [
         "schema": "EPA_AGOL_ASSESSMENT",
         "name": "PUBLIC_STATUS_ASSESSMENT",
         "url": (
-            "https://XXXXXservices.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
+            "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
             "SoCalFires2025_PublicStatusNightly/FeatureServer/0"
         ),
         "merge_on": ["OBJECTID", "_LOAD_DATE"],
@@ -31,7 +31,7 @@ datasets: list[dict[str, Any]] = [
         "schema": "USACE_AGOL_DEBRIS",
         "name": "PARCEL_DEBRIS_REMOVAL",
         "url": (
-            "https://XXXXXjecop-public.usace.army.mil/arcgis/rest/services/"
+            "https://jecop-public.usace.army.mil/arcgis/rest/services/"
             "USACE_Debris_Parcels_Southern_California_Public/MapServer/0"
         ),
         "merge_on": ["OBJECTID", "_LOAD_DATE"],

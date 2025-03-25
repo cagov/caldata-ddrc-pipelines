@@ -31,7 +31,7 @@ datasets: list[dict[str, Any]] = [
         "schema": "USACE_AGOL_DEBRIS",
         "name": "PARCEL_DEBRIS_REMOVAL",
         "url": (
-            "https://jecop-public.usace.army.mil/arcgis/rest/services/"
+            "https://XXXXXjecop-public.usace.army.mil/arcgis/rest/services/"
             "USACE_Debris_Parcels_Southern_California_Public/MapServer/0"
         ),
         "merge_on": ["OBJECTID", "_LOAD_DATE"],

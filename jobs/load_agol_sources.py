@@ -126,4 +126,4 @@ if __name__ == "__main__":
         finally:
             snowflake_conn.close()
 if error_message != "":
-    raise ValueError(error_message)
+    raise RuntimeError(error_message)

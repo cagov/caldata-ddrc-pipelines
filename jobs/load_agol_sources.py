@@ -42,6 +42,7 @@ datasets: list[dict[str, Any]] = [
 ]
 
 if __name__ == "__main__":
+    error_message = ""
     for d in datasets:
         name: str = d["name"]
         url: str = d["url"]
@@ -121,5 +122,8 @@ if __name__ == "__main__":
                 snowflake_conn.cursor().execute(f"""drop table {tmp}""")
         except Exception as e:
             print(f"Unable to load {name}, due to {e}")
+            error_message += f"Unable to load {name}, due to {e} \n"
         finally:
             snowflake_conn.close()
+if error_message != "":
+    raise RuntimeError(error_message)

@@ -1,8 +1,9 @@
-{% test is_under_threshold(model, column_name, threshold_amount) %}
+{% test is_under_threshold(model, column_name, metric_column_name, metric_name, threshold_amount) %}
 
 with validation as (
 
     select
+        {{ metric_column_name }} as metric_column_name,
         {{ column_name }} as amount_field
 
     from {{ model }}
@@ -16,7 +17,7 @@ validation_errors as (
 
     from validation
     -- if this is true, amount is not under threshold.
-    where amount_field > {{ threshold_amount }}
+    where amount_field > {{ threshold_amount }} and metric_column_name  = {{ metric_name }}
 
 )
 

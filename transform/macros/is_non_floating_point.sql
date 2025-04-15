@@ -17,7 +17,9 @@ validation_errors as (
 
     from validation
     -- if this is true, then non_floating_point_field contains decimals
-    where MOD(non_floating_point_field,1) <> 0 and metric_type  = {{ metric_target_type }}
+
+    where MOD(non_floating_point_field,1) <> 0
+    and metric_type  = '{{ metric_target_type }}'
 
 )
 

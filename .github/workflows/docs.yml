@@ -40,8 +40,8 @@ jobs:
         run: poetry install --no-interaction --no-root
       - name: Build dbt docs
         run: |
-          dbt deps --project-dir=transform
-          dbt docs generate --project-dir=transform --target=prd
+          poetry run dbt deps --project-dir=transform
+          poetry run dbt docs generate --project-dir=transform --target=prd
           cp -r transform/target docs/dbt_docs
       - name: Deploy docs to GitHub Pages
         if: github.ref.name == 'refs/heads/main'

@@ -20,14 +20,18 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      - uses: actions/cache@v4
-        with:
-          key: ${{ github.ref }}
-          path: .cache
       - uses: snok/install-poetry@v1
+        with:
+          virtualenvs-path: .venv
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
-        run: |
-          poetry install
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
       - name: Load data
         env:
           SNOWFLAKE_ROLE: ${{ github.ref_name =='main' && 'LOADER_DDRC_PRD' || 'LOADER_DDRC_DEV' }}

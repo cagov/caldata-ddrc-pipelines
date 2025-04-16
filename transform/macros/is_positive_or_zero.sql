@@ -17,7 +17,7 @@ validation_errors as (
 
     from validation
     -- if this is true, then positive_field is negative
-    where positive_field < 0 and metric_type  = {{ metric_target_type }}
+    where positive_field < 0 and metric_type  = '{{ metric_target_type }}'
 
 )
 

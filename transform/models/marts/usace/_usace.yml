@@ -10,8 +10,8 @@ models:
         data_tests:
           - is_positive_or_zero:
               metric_type: metric_unit_label
-              metric_target_type: "'TK'"
+              metric_target_type: TK
           - is_non_floating_point:
               metric_type: metric_unit_label
-              metric_target_type: "'TK'"
+              metric_target_type: TK
       - name: last_updated

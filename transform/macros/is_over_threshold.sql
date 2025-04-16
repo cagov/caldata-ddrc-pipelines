@@ -17,7 +17,7 @@ validation_errors as (
 
     from validation
     -- if this is true, amount is not over threshold.
-    where amount_field < {{ threshold_amount }} and metric_column_name  = {{ metric_name }}
+    where amount_field < {{ threshold_amount }} and metric_column_name  = '{{ metric_name }}'
 
 )
 

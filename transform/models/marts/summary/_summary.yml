@@ -27,13 +27,13 @@ models:
           - not_null
           - is_positive_or_zero:
               metric_type: metric_type
-              metric_target_type: "'count'"
+              metric_target_type: count
           - is_positive_or_zero:
               metric_type: metric_type
-              metric_target_type: "'dollars - millions'"
+              metric_target_type: dollars - millions
           - is_non_floating_point:
               metric_type: metric_type
-              metric_target_type: "'count'"
+              metric_target_type: count
       - name: metric_type
         description: Category of metric
         data_type: string

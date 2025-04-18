@@ -64,6 +64,12 @@ if __name__ == "__main__":
                     _LOAD_DATE=pandas.Timestamp.today(tz="America/Los_Angeles").date(),
                 )  # type: ignore
             )
+
+            # Print column names and types
+            print(f"Schema for {name}:")
+            print(gdf.dtypes)
+            print("-" * 40)
+
             if last_edit_date:
                 gdf = gdf.assign(_LAST_EDIT_DATE=last_edit_date)  # type: ignore
             else:

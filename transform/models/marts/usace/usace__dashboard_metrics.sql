@@ -1,6 +1,9 @@
 with usace as (
 
     select * from {{ ref('int_usace__most_recent_debris_removal') }}
+    where
+        event_sub_name in ('Eaton', 'Palisades')
+        and ma = '4856DR-CA-COE-SPD-09'
 
 ),
 

@@ -24,6 +24,7 @@ with pdr as (
         gdb_to_date,
         gdb_from_date,
         "geometry" as geometry,
+        "event_sub_name" as event_sub_name,
         _load_date,
         to_timestamp_tz(_loaded_at) as last_updated
 

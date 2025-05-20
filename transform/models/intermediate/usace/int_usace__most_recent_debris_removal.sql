@@ -8,6 +8,7 @@ with pdr as (
 most_recent_pdr_data as (
 
     select
+        ma,
         epa_status,
         roe_status,
         roe_approved,
@@ -16,6 +17,7 @@ most_recent_pdr_data as (
         pcr_status,
         fso_pkg_approved,
         object_id,
+        event_sub_name,
         _load_date,
         convert_timezone('UTC', last_updated) as last_updated
 

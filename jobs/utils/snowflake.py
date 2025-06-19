@@ -163,16 +163,21 @@ def gdf_to_snowflake(
         if not gdf.crs:
             raise ValueError("Must supply a GeoDataFrame with a known CRS")
 
+        def _constrain_longitude(x, y):
+            return x % 360.0 if x % 360.0 < 180.0 else x % 360.0 - 360.0, y
+
+        def _normalize_shape(s):
+            if pandas.isna(s) or s.is_empty:
+                return s
+            else:
+                return shapely.ops.transform(
+                    _constrain_longitude, shapely.ops.orient(s, 1)
+                )
+
         # Ensure that the geometry columns are properly oriented and valid geometries.
         gdf = gdf.assign(
             **{
-                name: gdf[name]
-                .make_valid()
-                .apply(
-                    lambda s: shapely.ops.orient(s, 1)
-                    if (pandas.notna(s) and not s.is_empty)
-                    else s
-                )
+                name: gdf[name].make_valid().apply(_normalize_shape)
                 for name, dtype in gdf.dtypes.items()
                 if isinstance(dtype, geopandas.array.GeometryDtype)
             }

@@ -27,18 +27,18 @@ datasets: list[dict[str, Any]] = [
         ),
         "merge_on": ["OBJECTID", "_LOAD_DATE"],
     },
-    #{
-    #"schema": "USACE_AGOL_DEBRIS",
-    #"name": "PARCEL_DEBRIS_REMOVAL",
-    #"url": (
-    #"https://jecop-public.usace.army.mil/arcgis/rest/services/"
-    #"USACE_Debris_Parcels_Southern_California_Public/MapServer/0"
-    #),
-    #"merge_on": ["OBJECTID", "_LOAD_DATE"],
-    ## The USACE seems to have some bad SSL settings on their public-facing AGOL.
-    ## A bit concerning...
-    #"verify": False,
-    #},
+    # {
+    # "schema": "USACE_AGOL_DEBRIS",
+    # "name": "PARCEL_DEBRIS_REMOVAL",
+    # "url": (
+    # "https://jecop-public.usace.army.mil/arcgis/rest/services/"
+    # "USACE_Debris_Parcels_Southern_California_Public/MapServer/0"
+    # ),
+    # "merge_on": ["OBJECTID", "_LOAD_DATE"],
+    # The USACE seems to have some bad SSL settings on their public-facing AGOL.
+    # A bit concerning...
+    # "verify": False,
+    # },
 ]
 
 if __name__ == "__main__":

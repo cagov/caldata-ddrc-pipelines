@@ -36,6 +36,8 @@ models:
         +schema: epa
       usace:
         +schema: usace
+      malibu:
+        +schema: malibu
 
     intermediate:
       +materialized: view
@@ -43,6 +45,8 @@ models:
         +schema: epa
       usace:
         +schema: usace
+      malibu:
+        +schema: malibu
 
     marts:
       +materialized: table
@@ -55,3 +59,5 @@ models:
         +schema: summary
       usace:
         +schema: usace
+      permitting:
+        +schema: permitting

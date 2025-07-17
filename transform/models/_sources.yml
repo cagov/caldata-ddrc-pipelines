@@ -101,3 +101,14 @@ sources:
           - name: time
           - name: url
           - name: page_section
+
+  - name: MALIBU_REBUILDS
+    database: RAW_DDRC_DEV
+    schema: MALIBU_REBUILDS
+    description: |
+      Data tables from Malibu's [rebuilding dashboard](https://maliburebuilds.org/rebuild-dashboard/)
+    tables:
+      - name: FIRE_REBUILD_POINTS
+      - name: FIRE_REBUILD_VISIT_POINTS
+      - name: OVERALL_REBUILD_STATS_PIE_READ
+      - name: PALISADES_PERMITS_ISSUED_READ

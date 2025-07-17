@@ -23,6 +23,28 @@ usace_parcel_debris_metrics as (
     from {{ ref('usace__dashboard_metrics') }}
 ),
 
+malibu_permitting_metrics as (
+    select
+        metric_name,
+        metric_value,
+        'count' as metric_type,
+        'TK' as metric_unit_label,
+        'daily' as update_frequency,
+        last_updated
+    from {{ ref('malibu_permitting_metrics') }}
+),
+
+pasadena_permitting_metrics as (
+    select
+        metric_name,
+        metric_value,
+        'count' as metric_type,
+        'TK' as metric_unit_label,
+        'daily' as update_frequency,
+        last_updated
+    from {{ ref('pasadena_permitting_metrics') }}
+),
+
 --As additional automated metrics (as in, metrics that are not
 --manually entered into the airtable are added to the DDRC,
 --union them together here:
@@ -30,7 +52,10 @@ pipeline_metrics as (
     select * from epa_count_phase1_complete
     union all
     select * from usace_parcel_debris_metrics
-
+    union all
+    select * from malibu_permitting_metrics
+    union all
+    select * from pasadena_permitting_metrics
 ),
 
 --The Airtable captures all metrics, including those

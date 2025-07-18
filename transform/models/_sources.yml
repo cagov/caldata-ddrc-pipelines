@@ -109,6 +109,43 @@ sources:
       Data tables from Malibu's [rebuilding dashboard](https://maliburebuilds.org/rebuild-dashboard/)
     tables:
       - name: FIRE_REBUILD_POINTS
+        description: |
+          Geographic points representing individual fire rebuild applications and their status.
+        columns:
+          - name: type
+            description: The current status/type of the rebuild application
+          - name: lat
+            description: Latitude coordinate of the rebuild location
+          - name: lng
+            description: Longitude coordinate of the rebuild location
+          - name: projectNumber
+            description: Unique project identifier for the rebuild application
+          - name: planningApproved
+            description: Boolean flag indicating whether planning approval has been granted
+          - name: CASETYPE
+          - name: CASECATEGORY
+          - name: STRUCTURES
+          - name: DAYSTODECISION
+            description: Number of days taken to reach a decision on the application
+          - name: DAYSTOFIRSTRESPONSE
+            description: Number of days taken to provide the first response to the application
+          - name: COUNTFORDECISION
+          - name: COUNTFORFIRSTRESPONSE
+          - name: _load_date
+            description: Date when this record was loaded into the data warehouse
+          - name: _loaded_at
+            description: Timestamp when this record was loaded into the data warehouse
       - name: FIRE_REBUILD_VISIT_POINTS
       - name: OVERALL_REBUILD_STATS_PIE_READ
       - name: PALISADES_PERMITS_ISSUED_READ
+        description: |
+          Summary data of permits issued for Palisades area rebuilds, broken down by permit type.
+        columns:
+          - name: PermitType
+            description: The type of permit issued (e.g., 'Building', 'Electrical', etc.)
+          - name: PalisadesPermits
+            description: Number of permits issued for this permit type
+          - name: _load_date
+            description: Date when this record was loaded into the data warehouse
+          - name: _loaded_at
+            description: Timestamp when this record was loaded into the data warehouse

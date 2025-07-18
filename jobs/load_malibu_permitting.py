@@ -26,6 +26,9 @@ endpoints = {
 if __name__ == "__main__":
     error_message = ""
     snowflake_conn = snowflake_connection_from_environment(schema="MALIBU_REBUILDS")
+    snowflake_conn.cursor().execute(
+        f'CREATE SCHEMA IF NOT EXISTS "{snowflake_conn.schema}"'.upper()
+    )
 
     for name, endpoint in endpoints.items():
         try:

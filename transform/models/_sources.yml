@@ -103,7 +103,7 @@ sources:
           - name: page_section
 
   - name: MALIBU_REBUILDS
-    database: RAW_DDRC_DEV
+    database: RAW_DDRC_PRD
     schema: MALIBU_REBUILDS
     description: |
       Data tables from Malibu's [rebuilding dashboard](https://maliburebuilds.org/rebuild-dashboard/)
@@ -150,7 +150,7 @@ sources:
           - name: _loaded_at
             description: Timestamp when this record was loaded into the data warehouse
   - name: PASADENA_AGOL
-    database: RAW_DDRC_DEV
+    database: RAW_DDRC_PRD
     schema: PASADENA_AGOL
     description: |
       Data tables from Pasadena's [rebuilding dashboard]

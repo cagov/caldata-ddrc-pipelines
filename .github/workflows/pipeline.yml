@@ -38,6 +38,7 @@ jobs:
           SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'LOADING_XS_DDRC_PRD' || 'LOADING_XS_DDRC_DEV' }}
         run: |
           poetry run python -m jobs.load_agol_sources
+          poetry run python -m jobs.load_malibu_permitting
       - name: Build dbt project
         if: ${{ ! cancelled() }}
         env:

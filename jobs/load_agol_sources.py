@@ -52,7 +52,7 @@ datasets: list[dict[str, Any]] = [
 
 if __name__ == "__main__":
     error_message = ""
-    for d in datasets[2:]:
+    for d in datasets:
         name: str = d["name"]
         url: str = d["url"]
         verify = d.get("verify", True)

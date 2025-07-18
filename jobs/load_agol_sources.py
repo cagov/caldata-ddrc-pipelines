@@ -46,7 +46,7 @@ datasets: list[dict[str, Any]] = [
             "https://services2.arcgis.com/zNjnZafDYCAJAbN0/arcgis/rest/services/"
             "Eaton_Fire_Rebuild_Permits/FeatureServer/0/"
         ),
-        "merge_on": ["ID", "_LOAD_DATE"],
+        "merge_on": ["PERMIT_NUMBER", "_LOAD_DATE"],
     },
 ]
 

@@ -39,11 +39,20 @@ datasets: list[dict[str, Any]] = [
         # A bit concerning...
         "verify": False,
     },
+    {
+        "schema": "PASADENA_AGOL",
+        "name": "EATON_FIRE_REBUILD_PERMITS",
+        "url": (
+            "https://services2.arcgis.com/zNjnZafDYCAJAbN0/arcgis/rest/services/"
+            "Eaton_Fire_Rebuild_Permits/FeatureServer/0/"
+        ),
+        "merge_on": ["ID", "_LOAD_DATE"],
+    },
 ]
 
 if __name__ == "__main__":
     error_message = ""
-    for d in datasets:
+    for d in datasets[2:]:
         name: str = d["name"]
         url: str = d["url"]
         verify = d.get("verify", True)

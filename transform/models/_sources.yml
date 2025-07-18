@@ -149,3 +149,50 @@ sources:
             description: Date when this record was loaded into the data warehouse
           - name: _loaded_at
             description: Timestamp when this record was loaded into the data warehouse
+  - name: PASADENA_AGOL
+    database: RAW_DDRC_DEV
+    schema: PASADENA_AGOL
+    description: |
+      Data tables from Pasadena's [rebuilding dashboard]
+      (https://experience.arcgis.com/experience/d4c4617a88204a869a37404d1496cfbd/page/Rebuild-Permit-Status)
+    tables:
+      - name: EATON_FIRE_REBUILD_PERMITS
+        description: |
+          Permit status for rebuilding after the Eaton fire in Pasadena.
+        columns:
+          - name: ID
+            description: Unique identifier for the permit record
+          - name: PMPERMITID
+            description: PM (Permit Management) system permit identifier
+          - name: PERMIT_NUMBER
+            description: Official permit number issued by the city
+          - name: PARCEL_NUMBER
+            description: Assessor's parcel number for the property
+          - name: ADDRESS
+            description: Street address of the property
+          - name: CITY
+            description: City where the property is located
+          - name: STATE
+            description: State where the property is located
+          - name: ZIPCODE
+            description: ZIP code of the property
+          - name: PERMIT_STATUS
+            description: Current status of the permit (e.g., Issued, Pending, Approved, etc.)
+          - name: WORK_CLASS
+            description: Classification of the work type for the permit
+          - name: PERMIT_TYPE
+            description: Type of permit (e.g., Building, Electrical, Plumbing, etc.)
+          - name: DESCRIPTION
+            description: Detailed description of the work to be performed
+          - name: COUNCIL_DISTRICT
+            description: City council district where the property is located
+          - name: SHAPE__AREA
+            description: Area of the geographic shape/polygon representing the property
+          - name: SHAPE__LENGTH
+            description: Perimeter length of the geographic shape/polygon
+          - name: GEOMETRY
+            description: Geographic geometry data for the property location
+          - name: _LOAD_DATE
+            description: Date when this record was loaded into the data warehouse
+          - name: _LAST_EDIT_DATE
+            description: Date when this record was last edited in the source system

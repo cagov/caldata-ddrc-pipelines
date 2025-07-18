@@ -26,5 +26,5 @@ combined as (
 
 select
     combined.*,
-    current_timestamp as last_updated
+    convert_timezone('UTC', current_timestamp) as last_updated
 from combined

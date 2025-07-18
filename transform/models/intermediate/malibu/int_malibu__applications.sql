@@ -8,6 +8,6 @@ select
     lon,
     project_number,
     planning_approved,
-    convert_timezone('America/Los_Angeles', to_timestamp_ntz(_load_date)) as last_updated
+    last_updated
 from rebuild_points
 where _load_date = (select max(_load_date) from rebuild_points)

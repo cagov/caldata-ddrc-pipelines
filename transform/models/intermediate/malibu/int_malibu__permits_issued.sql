@@ -5,6 +5,6 @@ with permits_issued as (
 select
     type,
     permits,
-    _load_date as last_updated
+    last_updated
 from permits_issued
 where _load_date = (select max(_load_date) from permits_issued)

@@ -36,7 +36,11 @@ if __name__ == "__main__":
 
             # Include the load date so we can keep a history of the metrics by date
             load_date = pandas.Timestamp.today(tz="America/Los_Angeles").date()
-            df = pandas.DataFrame.from_records(r.json()).assign(_LOAD_DATE=load_date)
+            loaded_at = pandas.Timestamp.utcnow()
+            df = pandas.DataFrame.from_records(r.json()).assign(
+                _LOAD_DATE=load_date,
+                _LOADED_AT=loaded_at,
+            )
 
             if not table_exists(snowflake_conn, name):
                 write_pandas(
@@ -44,6 +48,8 @@ if __name__ == "__main__":
                     df,
                     name,
                     auto_create_table=True,
+                    overwrite=True,
+                    use_logical_type=True,
                 )
             else:
                 # If we have already loaded data for today, delete it before reloading.
@@ -52,7 +58,12 @@ if __name__ == "__main__":
                     f"""_load_date = '{load_date.isoformat()}'"""
                 )
                 write_pandas(
-                    snowflake_conn, df, name, auto_create_table=False, overwrite=False
+                    snowflake_conn,
+                    df,
+                    name,
+                    auto_create_table=False,
+                    overwrite=False,
+                    use_logical_type=True,
                 )
 
         except Exception as e:

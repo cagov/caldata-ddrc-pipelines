@@ -13,5 +13,5 @@ select
     "DESCRIPTION" as description,
     "COUNCIL_DISTRICT" as council_district,
     "_LOAD_DATE" as _load_date,
-    to_timestamp("_LAST_EDIT_DATE", 3) as last_updated
+    to_timestamp_tz("_LAST_EDIT_DATE", 3) as last_updated
 from {{ source("PASADENA_AGOL", "EATON_FIRE_REBUILD_PERMITS") }}

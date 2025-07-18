@@ -5,6 +5,6 @@ with permits_issued as (
 select
     type,
     permits,
-    last_updated
+    convert_timezone('UTC', last_updated) as last_updated
 from permits_issued
 where _load_date = (select max(_load_date) from permits_issued)

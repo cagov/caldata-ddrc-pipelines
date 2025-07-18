@@ -14,6 +14,6 @@ select
     permit_type,
     description,
     council_district,
-    last_updated
+    convert_timezone('UTC', last_updated) as last_updated
 from rebuild_permits
 where _load_date = (select max(_load_date) from rebuild_permits)

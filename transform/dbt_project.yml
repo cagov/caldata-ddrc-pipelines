@@ -36,6 +36,10 @@ models:
         +schema: epa
       usace:
         +schema: usace
+      malibu:
+        +schema: malibu
+      pasadena:
+        +schema: pasadena
 
     intermediate:
       +materialized: view
@@ -43,6 +47,10 @@ models:
         +schema: epa
       usace:
         +schema: usace
+      malibu:
+        +schema: malibu
+      pasadena:
+        +schema: pasadena
 
     marts:
       +materialized: table
@@ -55,3 +63,5 @@ models:
         +schema: summary
       usace:
         +schema: usace
+      permitting:
+        +schema: permitting

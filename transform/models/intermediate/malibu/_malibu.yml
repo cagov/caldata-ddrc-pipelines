@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: int_malibu__applications
+    description: |
+      Intermediate model for Malibu rebuild applications.
+      Filters to the most recent data load and provides clean
+      application data for downstream marts.
+    columns:
+      - name: type
+        description: |
+          The type/status of the rebuild application.
+          Used to categorize applications by their current state
+          in the permitting process.
+      - name: lat
+        description: Latitude coordinate of the rebuild location
+      - name: lon
+        description: Longitude coordinate of the rebuild location
+      - name: project_number
+        description: |
+          Unique project identifier for the rebuild application.
+          Used for tracking individual projects through the system.
+      - name: planning_approved
+        description: |
+          Boolean flag indicating whether planning approval has been granted.
+          Used to track approval status in the permitting process.
+      - name: last_updated
+        description: |
+          Timestamp indicating when the record was last updated,
+          displayed in UTC timezone for consistency across all models.
+
+  - name: int_malibu__permits_issued
+    description: |
+      Intermediate model for Malibu/Palisades permits issued data.
+      Filters to the most recent data load and provides clean
+      permit counts by type for downstream marts.
+    columns:
+      - name: type
+        description: |
+          The type of permit issued (e.g., 'Building', 'Electrical', etc.).
+          Used to categorize permits by their type.
+      - name: permits
+        description: |
+          Number of permits issued for this permit type.
+          Used in downstream aggregations and metrics.
+      - name: last_updated
+        description: |
+          Timestamp indicating when the record was last updated,
+          displayed in UTC timezone for consistency across all models.

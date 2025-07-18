@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_pasadena__eaton_fire_rebuild_permits
+    description: |
+      Staging model for Pasadena Eaton fire rebuild permits data.
+      Standardizes column names and provides clean permit data
+      for downstream models.
+    columns:
+      - name: id
+      - name: pm_permit_id
+      - name: permit_number
+        description: Official permit number issued by the city
+      - name: parcel_number
+        description: Assessor's parcel number for the property
+      - name: address
+        description: Street address of the property
+      - name: city
+        description: City where the property is located
+      - name: state
+        description: State where the property is located
+      - name: zipcode
+        description: ZIP code of the property
+      - name: permit_status
+        description: |
+          Current status of the permit (e.g., Issued, Pending, Approved, etc.).
+          Used to categorize permits by their current state in the process.
+      - name: work_class
+      - name: permit_type
+        description: |
+          Type of permit
+      - name: description
+        description: Detailed description of the work to be performed
+      - name: council_district
+        description: City council district where the property is located
+      - name: _load_date
+        description: |
+          Date when this record was loaded into the data warehouse.
+          Used for determining the most recent data load.
+      - name: last_updated
+        description: |
+          Date when this record was last edited in the source system.
+          Corresponds to _LAST_EDIT_DATE in the source data.

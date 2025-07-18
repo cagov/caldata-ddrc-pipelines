@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: int_pasadena__eaton_fire_rebuild_permits
+    description: |
+      Intermediate model for Pasadena Eaton fire rebuild permits.
+      Filters to the most recent data load and provides clean
+      permit data for downstream marts.
+    columns:
+      - name: permit_number
+        description: Official permit number issued by the city
+      - name: parcel_number
+        description: Assessor's parcel number for the property
+      - name: address
+        description: Street address of the property
+      - name: city
+        description: City where the property is located
+      - name: state
+        description: State where the property is located
+      - name: zipcode
+        description: ZIP code of the property
+      - name: permit_status
+        description: |
+          Current status of the permit
+      - name: work_class
+        description: Classification of the work type for the permit
+      - name: permit_type
+        description: |
+          Type of permit
+      - name: description
+        description: Detailed description of the work to be performed
+      - name: council_district
+        description: City council district where the property is located
+      - name: last_updated
+        description: |
+          Date when this record was last edited in the source system.
+          Used for tracking when permit data was last modified.

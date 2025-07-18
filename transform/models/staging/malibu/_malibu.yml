@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: stg_malibu__fire_rebuild_points
+    description: |
+      Staging model for Malibu fire rebuild points data.
+      Standardizes column names and handles timezone conversion
+      for last_updated timestamp.
+    columns:
+      - name: type
+        description: |
+          The type/status of the rebuild application.
+          Common values include 'InPlanning', 'PendingBSReview',
+          'InBPC', 'PermitIssued', etc.
+      - name: lat
+        description: Latitude coordinate of the rebuild location
+      - name: lon
+        description: Longitude coordinate of the rebuild location (from lng field)
+      - name: project_number
+        description: |
+          Unique project identifier for the rebuild application.
+          Corresponds to projectNumber in the source data.
+      - name: planning_approved
+        description: |
+          Boolean flag indicating whether planning approval has been granted.
+          Corresponds to planningApproved in the source data.
+      - name: _load_date
+        description: |
+          Raw load date from the source system, used for determining
+          the most recent data load.
+      - name: last_updated
+        description: |
+          Timestamp indicating when the record was last loaded.
+
+  - name: stg_malibu__palisades_permits_issued_read
+    description: |
+      Staging model for Malibu/Palisades permits issued data.
+      Standardizes column names and provides permit count information
+      by permit type.
+    columns:
+      - name: type
+        description: |
+          The type of permit issued (e.g., 'Building', 'Electrical', etc.).
+          Corresponds to PermitType in the source data.
+      - name: permits
+        description: |
+          Number of permits issued for this permit type.
+          Corresponds to PalisadesPermits in the source data.
+      - name: _load_date
+        description: |
+          Raw load date from the source system, used for determining
+          the most recent data load.
+      - name: last_updated
+        description: |
+          Timestamp indicating when the record was last updated.

@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: malibu_permitting_metrics
+    description: |
+      Aggregated metrics for Malibu rebuild permitting activities.
+      Provides key counts for applications received, in review,
+      and permits issued for dashboard reporting.
+    columns:
+      - name: metric_name
+        description: |
+          The name of the specific metric being tracked.
+      - name: metric_value
+        description: |
+          The numeric value of the metric (count of applications/permits).
+          Always represents a count of records.
+      - name: last_updated
+        description: |
+          Timestamp indicating when the underlying data was last updated.
+          Represents the most recent update across all application records,
+          displayed in UTC timezone for consistency.
+
+  - name: pasadena_permitting_metrics
+    description: |
+      Aggregated metrics for Pasadena rebuild permitting activities.
+      Currently returns placeholder values (0) as the data pipeline
+      for Pasadena is not yet implemented.
+    columns:
+      - name: metric_name
+        description: |
+          The name of the specific metric being tracked.
+      - name: metric_value
+        description: |
+          The numeric value of the metric (count of applications/permits).
+          Currently hardcoded to 0 as placeholder until data pipeline is implemented.
+      - name: last_updated
+        description: |
+          Timestamp indicating when the metrics were generated.
+          Currently set to current timestamp since these are placeholder values,
+          displayed in UTC timezone for consistency.

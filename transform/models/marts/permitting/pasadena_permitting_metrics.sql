@@ -1,28 +1,31 @@
-with pasadena_permitting as (
-    select * from {{ ref('int_pasadena__eaton_fire_rebuild_permits') }}
-),
+-- with pasadena_permitting as (
+--     select * from {{ ref('int_pasadena__eaton_fire_rebuild_permits') }}
+-- ),
 
-pasadena_rebuild_applications_received as (
+with pasadena_rebuild_applications_received as (
     select
         'pasadena_rebuild_applications_received' as metric_name,
-        count(*) as metric_value
-    from pasadena_permitting
+        -- count(*) as metric_value
+        0 as metric_value
+-- from pasadena_permitting
 ),
 
 pasadena_rebuild_applications_in_review as (
     select
         'pasadena_rebuild_applications_in_review' as metric_name,
-        count(*) as metric_value
-    from pasadena_permitting
-    where permit_status in ('In Review')
+        -- count(*) as metric_value
+        0 as metric_value
+-- from pasadena_permitting
+-- where permit_status in ('In Review')
 ),
 
 pasadena_building_permits_issued as (
     select
         'pasadena_building_permits_issued' as metric_name,
-        count(*) as metric_value
-    from pasadena_permitting
-    where permit_status in ('Issued')
+        -- count(*) as metric_value
+        0 as metric_value
+-- from pasadena_permitting
+-- where permit_status in ('Issued')
 ),
 
 combined as (
@@ -35,5 +38,6 @@ combined as (
 
 select
     combined.*,
-    (select max(last_updated) as last_updated from pasadena_permitting) as last_updated
+    convert_timezone('UTC', current_timestamp) as last_updated
+    -- (select max(last_updated) as last_updated from pasadena_permitting) as last_updated
 from combined

@@ -39,15 +39,15 @@ datasets: list[dict[str, Any]] = [
         # A bit concerning...
         "verify": False,
     },
-    {
-        "schema": "PASADENA_AGOL",
-        "name": "EATON_FIRE_REBUILD_PERMITS",
-        "url": (
-            "https://services2.arcgis.com/zNjnZafDYCAJAbN0/arcgis/rest/services/"
-            "Eaton_Fire_Rebuild_Permits/FeatureServer/0/"
-        ),
-        "merge_on": ["PERMIT_NUMBER", "_LOAD_DATE"],
-    },
+    # {
+    #    "schema": "PASADENA_AGOL",
+    #    "name": "EATON_FIRE_REBUILD_PERMITS",
+    #    "url": (
+    #        "https://services2.arcgis.com/zNjnZafDYCAJAbN0/arcgis/rest/services/"
+    #        "Eaton_Fire_Rebuild_Permits/FeatureServer/0/"
+    #    ),
+    #    "merge_on": ["PERMIT_NUMBER", "_LOAD_DATE"],
+    # },
 ]
 
 if __name__ == "__main__":

@@ -67,7 +67,7 @@ jobs:
           SLACK_USERNAME: cagov Slackbot
           SLACK_TITLE: ⚠️ DDRC pipeline error! ⚠️
           SLACK_MESSAGE: |
-            <@U04B65518U8> <@U07NQ5RKY1J> <@U071ZBU5L4W> <@U06CD0W49UJ> <@U06C9QP36MA>
+            ${{ vars.DDRC_SLACK_AT_LIST }}
             The hourly DDRC automated Snowflake data pipeline has an issue.
             Data will not be updated in Azure until this is resolved.
             ${{ github.event.workflow_run.html_url }}

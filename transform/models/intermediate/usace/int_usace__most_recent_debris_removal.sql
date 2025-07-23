@@ -1,9 +1,6 @@
 with pdr as (
-
     select * from {{ ref('stg_usace__parcel_debris_removal') }}
-
 ),
-
 
 most_recent_pdr_data as (
 
@@ -22,7 +19,7 @@ most_recent_pdr_data as (
         convert_timezone('UTC', last_updated) as last_updated
 
     from pdr
-    where last_updated = (select max(last_updated) from pdr)
+    where last_updated = (select max(p.last_updated) from pdr as p)
 
 )
 

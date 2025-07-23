@@ -35,5 +35,5 @@ combined as (
 
 select
     combined.*,
-    (select max(last_updated) as last_updated from pasadena_permitting) as last_updated
+    (select max(p.last_updated) as last_updated from pasadena_permitting as p) as last_updated
 from combined

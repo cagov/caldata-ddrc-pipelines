@@ -12,7 +12,7 @@ most_recent_psa_data as (
         fire_name,
         convert_timezone('UTC', last_updated) as last_updated
     from psa
-    where load_date = (select max(load_date) from psa)
+    where load_date = (select max(p.load_date) from psa as p)
 )
 
 select * from most_recent_psa_data

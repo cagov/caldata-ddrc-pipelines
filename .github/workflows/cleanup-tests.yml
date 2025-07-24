@@ -31,5 +31,5 @@ jobs:
           python-version-file: ".python-version"
       - name: Cleanup after tests
         run: |
-          uv run python -m jobs.utils.drop_schemas_with_prefix $SNOWFLAKE_DATABASE $SNOWFLAKE_SCHEMA
-          uv run python -m jobs.utils.drop_schemas_with_prefix $DBT_ANALYTICS_DB $SNOWFLAKE_SCHEMA
+          uv run dbt run-operation drop_schemas_with_prefix --args '{database_name: $SNOWFLAKE_DATABASE, prefix: $SNOWFLAKE_SCHEMA}'
+          uv run dbt run-operation drop_schemas_with_prefix --args '{database_name: $DBT_ANALYTICS_DB, prefix: $SNOWFLAKE_SCHEMA}' 

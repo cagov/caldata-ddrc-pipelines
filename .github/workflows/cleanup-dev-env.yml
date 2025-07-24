@@ -2,7 +2,7 @@ name: cleanup-dev-env
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * 1"  # 8PM PT on Sundays (3AM UTC on Mondays)
+    - cron: "0 3 * * 1" # 8PM PT on Sundays (3AM UTC on Mondays)
 
 env:
   DBT_PROFILES_DIR: transform/ci
@@ -13,7 +13,7 @@ env:
   SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
   SNOWFLAKE_ROLE: TRANSFORMER_DDRC_DEV
   SNOWFLAKE_WAREHOUSE: TRANSFORMING_XS_DDRC_DEV
-  SNOWFLAKE_DATABASE: TRANSFORM_DDRC_DEV 
+  SNOWFLAKE_DATABASE: TRANSFORM_DDRC_DEV
 
 jobs:
   cleanup-dev-env:

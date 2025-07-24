@@ -1,0 +1,33 @@
+name: cleanup-dev-env
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"  # 8PM PT on Sundays (3AM UTC on Mondays)
+
+env:
+  DBT_PROFILES_DIR: transform/ci
+  DBT_RAW_DB: RAW_DDRC_PRD
+  DBT_ANALYTICS_DB: ANALYTICS_DDRC_DEV
+  SNOWFLAKE_PRIVATE_KEY: ${{ SECRETS.SNOWFLAKE_PRIVATE_KEY_DEV }}
+  SNOWFLAKE_USER: ${{ SECRETS.SNOWFLAKE_USER_DEV }}
+  SNOWFLAKE_ACCOUNT: ${{ SECRETS.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_ROLE: TRANSFORMER_DDRC_DEV
+  SNOWFLAKE_WAREHOUSE: TRANSFORMING_XS_DDRC_DEV
+  SNOWFLAKE_DATABASE: TRANSFORM_DDRC_DEV 
+
+jobs:
+  cleanup-dev-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: Cleanup Developers schemas
+        run: |
+          uv run dbt run-operation drop_schemas_with_prefix --args '{database_name: $SNOWFLAKE_DATABASE, prefix: DBT_}'

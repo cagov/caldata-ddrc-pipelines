@@ -16,29 +16,23 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.10"
-      - uses: snok/install-poetry@v1
+          enable-cache: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          virtualenvs-path: .venv
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v4
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Install dependencies
-        run: poetry install --no-interaction --no-root
+          python-version-file: ".python-version"
       - name: Load data
         env:
           SNOWFLAKE_ROLE: ${{ github.ref_name =='main' && 'LOADER_DDRC_PRD' || 'LOADER_DDRC_DEV' }}
           SNOWFLAKE_DATABASE: ${{ github.ref_name =='main' && 'RAW_DDRC_PRD' || 'RAW_DDRC_DEV' }}
           SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'LOADING_XS_DDRC_PRD' || 'LOADING_XS_DDRC_DEV' }}
         run: |
-          poetry run python -m jobs.load_agol_sources
-          poetry run python -m jobs.load_malibu_permitting
+          uv run python -m jobs.load_agol_sources
+          uv run python -m jobs.load_malibu_permitting
       - name: Build dbt project
         if: ${{ ! cancelled() }}
         env:
@@ -51,9 +45,9 @@ jobs:
             ${{ github.ref_name =='main' && 'TRANSFORMING_XS_DDRC_PRD' || 'TRANSFORMING_XS_DDRC_DEV' }}
           TARGET_ENV: ${{ github.ref_name =='main' && 'prd' || 'dev' }}
         run: |
-          poetry run dbt deps --project-dir transform --target $TARGET_ENV
-          poetry run dbt build --project-dir transform --target $TARGET_ENV
-          poetry run dbt run-operation unload_ddrc_metrics --project-dir transform --target $TARGET_ENV
+          uv run dbt deps --project-dir transform --target $TARGET_ENV
+          uv run dbt build --project-dir transform --target $TARGET_ENV
+          uv run dbt run-operation unload_ddrc_metrics --project-dir transform --target $TARGET_ENV
 
   slack-notification:
     runs-on: ubuntu-latest

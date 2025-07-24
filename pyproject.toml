@@ -1,30 +1,27 @@
-[tool.poetry]
+[project]
 name = "caldata-ddrc-pipelines"
 version = "0.1.0"
-description = "\"CalData Digital Disaster Recovery Center Data Pipelines\""
+description = "CalData Digital Disaster Recovery Center Data Pipelines"
 authors = ["CalData Data Operations and Engineering <ian.rose@innovation.ca.gov>"]
 license = "MIT"
 readme = "README.md"
-package-mode = false
+requires-python = "==3.13.*"
+dependencies = [
+    "backoff>=2.2.1",
+    "dbt-core~=1.10",
+    "dbt-snowflake~=1.10",
+    "geopandas~=1.0",
+    "mkdocs-material~=9.6.14",
+    "snowflake-connector-python[pandas]>=3.16.0",
+    "snowflake-snowpark-python>=1.34.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.10"
-mkdocs-material = "~9.1.3"
-dbt-core = "~1.9.0"
-dbt-snowflake = "~1.9.0"
-snowflake-connector-python = {"version"="~3.13", "extras"=["pandas"]}
-snowflake-snowpark-python = "~1.27"
-geopandas = "~1.0"
-backoff = "^2.2.1"
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.3.1"
-sqlfluff = "~3.1.0"
-sqlfluff-templater-dbt = "~3.1.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+    "sqlfluff>=3.4.1",
+    "sqlfluff-templater-dbt>=3.4.1",
+]
 
 [tool.mypy]
 python_version = "3.10"
@@ -35,4 +32,3 @@ show_error_codes = true
 warn_redundant_casts = true
 warn_unused_ignores = false
 warn_unreachable = true
-

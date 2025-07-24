@@ -36,7 +36,6 @@ malibu_building_permits_issued as (
     where type = 'Building'
 ),*/
 
-
 combined as (
     select * from malibu_rebuild_applications_received
     union all
@@ -47,5 +46,5 @@ combined as (
 
 select
     combined.*,
-    (select max(last_updated) as last_updated from applications) as last_updated
+    (select max(a.last_updated) as last_updated from applications as a) as last_updated
 from combined

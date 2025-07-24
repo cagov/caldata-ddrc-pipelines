@@ -5,7 +5,6 @@ with air as (
 
 ),
 
-
 -- select most recent version of each individual metric
 max_modified as (
     select

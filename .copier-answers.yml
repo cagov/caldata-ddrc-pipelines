@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: 00cc179
+_commit: 67d45ed
 _src_path: https://github.com/cagov/caldata-infrastructure-template
 dbt_profile_name: caldata_ddrc_pipelines
 email_address: ian.rose@innovation.ca.gov

@@ -71,7 +71,7 @@ airtable_metrics as (
         last_updated
     from {{ ref('airtable__most_recent_metrics') }}
     where
-        metric_name not in (select metric_name from pipeline_metrics) -- this line ensures we are always
+        metric_name not in (select pm.metric_name from pipeline_metrics as pm) -- this line ensures we are always
         --prioritizing a metric coming from one of our API pipelines, if it also exists in airtable
 ),
 

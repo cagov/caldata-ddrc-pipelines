@@ -43,4 +43,3 @@ resource "snowflake_grant_privileges_to_account_role" "marts" {
     object_name = "${snowflake_stage.marts.database}.${snowflake_stage.marts.schema}.${snowflake_stage.marts.name}"
   }
 }
-

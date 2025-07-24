@@ -7,4 +7,4 @@ select
     permits,
     convert_timezone('UTC', last_updated) as last_updated
 from permits_issued
-where _load_date = (select max(_load_date) from permits_issued)
+where _load_date = (select max(pi._load_date) from permits_issued as pi)

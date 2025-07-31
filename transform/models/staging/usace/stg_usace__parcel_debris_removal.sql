@@ -11,6 +11,7 @@ with pdr as (
         to_timestamp_tz("roe_approved"::int, 3) as roe_approved,
         to_timestamp_tz("roe_submitted"::int, 3) as roe_submitted,
         to_timestamp_tz("roe_withdrawn"::int, 3) as roe_withdrawn,
+        "roe_details" as roe_details,
         "hsa_status" as hsa_status,
         to_timestamp_tz("hsa_report_received"::int, 3) as hsa_report_received,
         to_timestamp_tz("hsa_report_approved"::int, 3) as hsa_report_approved,

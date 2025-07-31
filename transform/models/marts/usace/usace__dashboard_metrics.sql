@@ -14,7 +14,10 @@ roe_status as (
         count(distinct object_id) as metric_value,
         last_updated
     from usace
-    where roe_approved is not null
+    where
+        roe_approved is not null
+        and roe_status not in ('returned_ineligible', 'returned_withdrawn')
+        and roe_details = 'County'
     group by all
 ),
 
@@ -25,7 +28,10 @@ in_queue as (
         count(distinct object_id) as metric_value,
         last_updated
     from usace
-    where roe_submitted is not null
+    where
+        roe_submitted is not null
+        and roe_status not in ('returned_ineligible', 'returned_withdrawn')
+        and roe_details = 'County'
     group by all
 
 ),
@@ -38,7 +44,10 @@ fso_return as (
         count(distinct object_id) as metric_value,
         last_updated
     from usace
-    where fso_pkg_approved is not null
+    where
+        fso_pkg_approved is not null
+        and roe_status not in ('returned_ineligible', 'returned_withdrawn')
+        and roe_details = 'County'
     group by all
 ),
 

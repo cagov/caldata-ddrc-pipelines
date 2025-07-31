@@ -10,6 +10,7 @@ most_recent_pdr_data as (
         roe_status,
         roe_approved,
         roe_submitted,
+        roe_details,
         hsa_status,
         pcr_status,
         fso_pkg_approved,

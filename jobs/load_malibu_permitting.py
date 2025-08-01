@@ -1,6 +1,6 @@
-import requests
 import pandas
 from jobs.utils.snowflake import snowflake_connection_from_environment, table_exists
+from jobs.utils.geo import get_with_backoff
 
 from snowflake.connector.pandas_tools import write_pandas
 
@@ -34,8 +34,7 @@ if __name__ == "__main__":
         try:
             print(f"Loading {name}")
             # Fetch the data
-            r = requests.get(endpoint)
-            r.raise_for_status()
+            r = get_with_backoff(endpoint)
 
             # Include the load date so we can keep a history of the metrics by date
             load_date = pandas.Timestamp.today(tz="America/Los_Angeles").date()

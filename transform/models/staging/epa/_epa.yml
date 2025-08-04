@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_epa__public_status_assessment
+    columns:
+      - name: PUBLIC_STATUS
+      - name: LAND_USE
+      - name: FIRE_NAME
+      - name: LAST_UPDATED
+      - name: ASSESSOR_PARCEL_NUMBER
+      - name: ADDRESS
+      - name: ASSESSMENT_DATE
+      - name: FIRE_NAME
+      - name: GLOBAL_ID
+      - name: LAND_USE
+      - name: OBJECT_ID
+      - name: PUBLIC_STATUS
+      - name: SHAPE_AREA
+      - name: SHAPE_LENGTH
+      - name: LAST_UPDATED
+      - name: LOAD_DATE
+      - name: GEOMETRY

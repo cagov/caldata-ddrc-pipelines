@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_usace__parcel_debris_removal
+    description: |
+      TK
+    columns:
+      - name: EPA_STATUS
+      - name: ROE_STATUS
+      - name: HSA_STATUS
+      - name: PCR_STATUS
+      # - name: FSO_PKG_RETURNED
+      - name: OBJECT_ID
+      - name: _LOAD_DATE
+      - name: LAST_UPDATED
+      - name: MA
+      - name: ROE_APPROVED
+      - name: ROE_SUBMITTED
+      - name: FSO_PKG_APPROVED
+      - name: EVENT_SUB_NAME
+      - name: ASSESSOR_PARCEL_NUMBER
+      - name: APN_CONINCIDENT_LIST
+      - name: ADDRESS
+      - name: ROE_RECEIVED
+      - name: ROE_WITHDRAWN
+      - name: HSA_REPORT_RECEIVED
+      - name: HSA_REPORT_APPROVED
+      - name: PCR_RECEIVED
+      - name: PCR_APPROVED
+      - name: PCR_DELIVERY
+      - name: FSO_PKG_RETURNED
+      - name: GDB_TO_DATE
+      - name: GDB_FROM_DATE
+      - name: GEOMETRY

@@ -51,6 +51,9 @@ sources:
           - name: METRIC_MODIFIED_BY
           - name: DATE_METRIC_MODIFIED
           - name: METRIC
+          - name: AS_OF_DATE_AND_TIME
+          - name: AS_OF_OFFSET_FROM_METRIC_DEFINITION_
+          - name: AS_OF_DATE_AND_TIME_COPY
 
   - name: USACE
     database: RAW_DDRC_PRD
@@ -85,6 +88,15 @@ sources:
           - name: geometry
           - name: _LOAD_DATE
           - name: _LOADED_AT
+          - name: EVENT_SUB_NAME
+          - name: HHM_REMOVAL_STATUS
+          - name: FSO_PKG_STATUS
+          - name: SHAPE
+          - name: ROE_RETURNED_COMPLETE
+          - name: ROE_RETURNED_INELIGIBLE
+          - name: ROE_RETURNED_WITHDRAWN
+          - name: ROE_DETAILS
+          - name: FSO_PKG_RECEIVED
 
   - name: PAGE_FEEDBACK
     database: RAW_DDRC_PRD
@@ -101,6 +113,9 @@ sources:
           - name: time
           - name: url
           - name: page_section
+          - name: _FIVETRAN_SYNCED
+          - name: _FIVETRAN_DELETED
+          - name: IS_HELPFUL
 
   - name: MALIBU_REBUILDS
     database: RAW_DDRC_PRD
@@ -136,7 +151,38 @@ sources:
           - name: _loaded_at
             description: Timestamp when this record was loaded into the data warehouse
       - name: FIRE_REBUILD_VISIT_POINTS
+        description: |
+          Geographic points representing visits to fire rebuild applications.
+        columns:
+          # - name: type
+          #   description: The type of visit (e.g., 'Site Visit', 'Inspection', etc.)
+          # - name: lat
+          #   description: Latitude coordinate of the visit location
+          # - name: lng
+          #   description: Longitude coordinate of the visit location
+          # - name: projectNumber
+          #   description: Unique project identifier for the rebuild application associated with the visit
+          - name: _load_date
+            description: Date when this record was loaded into the data warehouse
+          - name: _loaded_at
+            description: Timestamp when this record was loaded into the data warehouse
+          - name: INITIALVISITS
+          - name: FOLLOWUPVISITS
       - name: OVERALL_REBUILD_STATS_PIE_READ
+        description: |
+          Summary statistics of rebuild applications, including counts of different statuses.
+        columns:
+          # - name: status
+          #   description: The current status of the rebuild applications (e.g., 'Approved', 'Pending', etc.)
+          # - name: count
+          #   description: Number of applications in this status
+          - name: _load_date
+            description: Date when this record was loaded into the data warehouse
+          - name: _loaded_at
+            description: Timestamp when this record was loaded into the data warehouse
+          - name: REBUILDGROUP
+          - name: REBUILDTYPECOUNT
+          - name: VALUECOLOR
       - name: PALISADES_PERMITS_ISSUED_READ
         description: |
           Summary data of permits issued for Palisades area rebuilds, broken down by permit type.

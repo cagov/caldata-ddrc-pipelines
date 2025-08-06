@@ -15,3 +15,4 @@ models:
               metric_type: metric_unit_label
               metric_target_type: TK
       - name: last_updated
+      - name: metric_unit_label

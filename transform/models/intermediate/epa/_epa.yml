@@ -9,4 +9,4 @@ models:
       - name: PUBLIC_STATUS
       - name: LAND_USE
       - name: FIRE_NAME
-      - name: LAST_EDIT_DATE
+      - name: LAST_UPDATED

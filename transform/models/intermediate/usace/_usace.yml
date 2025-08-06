@@ -15,5 +15,6 @@ models:
       - name: MA
       - name: ROE_APPROVED
       - name: ROE_SUBMITTED
+      - name: ROE_DETAILS
       - name: FSO_PKG_APPROVED
       - name: EVENT_SUB_NAME

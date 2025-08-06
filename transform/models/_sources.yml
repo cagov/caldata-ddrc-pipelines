@@ -154,14 +154,6 @@ sources:
         description: |
           Geographic points representing visits to fire rebuild applications.
         columns:
-          # - name: type
-          #   description: The type of visit (e.g., 'Site Visit', 'Inspection', etc.)
-          # - name: lat
-          #   description: Latitude coordinate of the visit location
-          # - name: lng
-          #   description: Longitude coordinate of the visit location
-          # - name: projectNumber
-          #   description: Unique project identifier for the rebuild application associated with the visit
           - name: _load_date
             description: Date when this record was loaded into the data warehouse
           - name: _loaded_at
@@ -172,10 +164,6 @@ sources:
         description: |
           Summary statistics of rebuild applications, including counts of different statuses.
         columns:
-          # - name: status
-          #   description: The current status of the rebuild applications (e.g., 'Approved', 'Pending', etc.)
-          # - name: count
-          #   description: Number of applications in this status
           - name: _load_date
             description: Date when this record was loaded into the data warehouse
           - name: _loaded_at

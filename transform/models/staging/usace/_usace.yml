@@ -9,7 +9,6 @@ models:
       - name: ROE_STATUS
       - name: HSA_STATUS
       - name: PCR_STATUS
-      # - name: FSO_PKG_RETURNED
       - name: OBJECT_ID
       - name: _LOAD_DATE
       - name: LAST_UPDATED

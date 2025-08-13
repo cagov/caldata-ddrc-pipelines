@@ -18,14 +18,14 @@ models:
           - is_non_floating_point:
               metric_type: metric_type
               metric_target_type: count
-          # - is_over_threshold:
-          #     metric_column_name: metric_machine_name
-          #     metric_name: "'people_helped_fema_funds'"
-          #     threshold_amount: 100
-          # - is_over_threshold:
-          #     metric_column_name: metric_machine_name
-          #     metric_name: "'people_helped_drc'"
-          #     threshold_amount: 50000
+          - is_over_threshold:
+              metric_column_name: metric_machine_name
+              metric_name: people_helped_fema_funds
+              threshold_amount: 100
+          - is_over_threshold:
+              metric_column_name: metric_machine_name
+              metric_name: people_helped_drc
+              threshold_amount: 50000
       - name: metric_type
       - name: update_frequency
       - name: last_updated

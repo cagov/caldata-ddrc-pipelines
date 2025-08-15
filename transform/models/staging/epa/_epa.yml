@@ -17,6 +17,5 @@ models:
       - name: PUBLIC_STATUS
       - name: SHAPE_AREA
       - name: SHAPE_LENGTH
-      - name: LAST_UPDATED
       - name: LOAD_DATE
       - name: GEOMETRY

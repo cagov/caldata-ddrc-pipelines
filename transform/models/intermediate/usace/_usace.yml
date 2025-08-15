@@ -5,11 +5,16 @@ models:
     description: |
       TK
     columns:
-      - name: epa_status,
-      - name: roe_status,
-      - name: hsa_status,
-      - name: pcr_status,
-      - name: fso_pkg_returned,
-      - name: object_id,
-      - name: _load_date,
-      - name: to_timestamp(_loaded_at) as last_updated
+      - name: EPA_STATUS
+      - name: ROE_STATUS
+      - name: HSA_STATUS
+      - name: PCR_STATUS
+      - name: OBJECT_ID
+      - name: _LOAD_DATE
+      - name: LAST_UPDATED
+      - name: MA
+      - name: ROE_APPROVED
+      - name: ROE_SUBMITTED
+      - name: ROE_DETAILS
+      - name: FSO_PKG_APPROVED
+      - name: EVENT_SUB_NAME

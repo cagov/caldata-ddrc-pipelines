@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_airtable__metrics
+    description: |
+      This model returns the most recently-updated version
+      of each metric in the Airtable.
+    columns:
+      - name: metric_machine_name
+      - name: metric
+      - name: metric_type
+      - name: update_frequency
+      - name: metric_unit_label
+      - name: date_created
+      - name: ID
+      - name: _FIVETRAN_SYNCED
+      - name: DATETIME_OFFSET_NUMBER
+      - name: AS_OF_LABEL
+      - name: DATETIME_OFFSET_VARIABLE
+      - name: DATE_METRIC_MODIFIED
+      - name: AS_OF_TIME
+      - name: METRIC_NAME
+      - name: METRIC_TITLE_FOR_INTERFACE
+      - name: TOPIC

@@ -29,3 +29,5 @@ models:
       - name: metric_type
       - name: update_frequency
       - name: last_updated
+      - name: metric_unit_label
+      - name: date_created

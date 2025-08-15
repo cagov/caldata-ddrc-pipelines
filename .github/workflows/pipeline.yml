@@ -48,6 +48,7 @@ jobs:
           uv run dbt deps --project-dir transform --target $TARGET_ENV
           uv run dbt build --project-dir transform --target $TARGET_ENV
           uv run dbt run-operation unload_ddrc_metrics --project-dir transform --target $TARGET_ENV
+          uv run dbt run-operation validate_all_schemas --project-dir transform --target $TARGET_ENV
 
   slack-notification:
     runs-on: ubuntu-latest

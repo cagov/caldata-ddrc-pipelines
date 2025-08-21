@@ -19,6 +19,14 @@ malibu_rebuild_applications_in_review as (
 
 malibu_building_permits_issued as (
     select
+        'malibu_in_building_plan_check' as metric_name,
+        count(*) as metric_value
+    from applications
+    where type in ('InBPC')
+),
+
+malibu_building_permits_issued as (
+    select
         'malibu_building_permits_issued' as metric_name,
         count(*) as metric_value
     from applications

@@ -14,7 +14,7 @@ malibu_rebuild_applications_in_review as (
         'malibu_rebuild_applications_in_review' as metric_name,
         count(*) as metric_value
     from applications
-    where type in ('InPlanning', 'PendingBSReview', 'InBPC')
+    where type in ('InPlanning', 'InBPC')
 ),
 
 malibu_building_permits_issued as (

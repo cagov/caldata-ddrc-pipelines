@@ -116,7 +116,7 @@ provider "aws" {
 ############################
 
 module "elt" {
-  source = "github.com/cagov/data-infrastructure.git//terraform/snowflake/modules/elt?ref=fe3255a"
+  source = "github.com/cagov/data-infrastructure.git//terraform/snowflake/modules/elt?ref=4d42165"
   providers = {
     snowflake.accountadmin  = snowflake.accountadmin,
     snowflake.securityadmin = snowflake.securityadmin,

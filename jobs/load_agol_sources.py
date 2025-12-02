@@ -19,27 +19,6 @@ if TYPE_CHECKING:
 
 datasets: list[dict[str, Any]] = [
     {
-        "schema": "EPA_AGOL_ASSESSMENT",
-        "name": "PUBLIC_STATUS_ASSESSMENT",
-        "url": (
-            "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/"
-            "SoCalFires2025_PublicStatusNightly/FeatureServer/0"
-        ),
-        "merge_on": ["OBJECTID", "_LOAD_DATE"],
-    },
-    {
-        "schema": "USACE_AGOL_DEBRIS",
-        "name": "PARCEL_DEBRIS_REMOVAL",
-        "url": (
-            "https://jecop-public.usace.army.mil/arcgis/rest/services/"
-            "USACE_Debris_Parcels_Southern_California_Public/MapServer/0"
-        ),
-        "merge_on": ["OBJECTID", "_LOAD_DATE"],
-        # The USACE seems to have some bad SSL settings on their public-facing AGOL.
-        # A bit concerning...
-        "verify": False,
-    },
-    {
         "schema": "PASADENA_AGOL",
         "name": "EATON_FIRE_REBUILD_PERMITS",
         "url": (

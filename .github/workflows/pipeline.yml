@@ -31,7 +31,6 @@ jobs:
           SNOWFLAKE_DATABASE: ${{ github.ref_name =='main' && 'RAW_DDRC_PRD' || 'RAW_DDRC_DEV' }}
           SNOWFLAKE_WAREHOUSE: ${{ github.ref_name =='main' && 'LOADING_XS_DDRC_PRD' || 'LOADING_XS_DDRC_DEV' }}
         run: |
-          uv run python -m jobs.load_agol_sources
           uv run python -m jobs.load_malibu_permitting
       - name: Build dbt project
         if: ${{ ! cancelled() }}

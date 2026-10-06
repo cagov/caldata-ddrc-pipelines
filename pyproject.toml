@@ -11,7 +11,7 @@ dependencies = [
     "dbt-core~=1.10",
     "dbt-snowflake~=1.10",
     "geopandas~=1.0",
-    "mkdocs-material~=9.6.14",
+    "mkdocs-material>=9.6.14,<9.8.0",
     "snowflake-connector-python[pandas]>=3.16.0",
     "snowflake-snowpark-python>=1.34.0",
 ]
